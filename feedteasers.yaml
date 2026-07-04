@@ -1,0 +1,31 @@
+enabled: true
+
+# Wie lange (in Sekunden) ein abgerufener Feed zwischengespeichert wird,
+# bevor er erneut abgerufen wird.
+cache_time: 1800
+
+# Maximale Anzahl an Beiträgen pro Feed.
+items_per_feed: 6
+
+# Länge des Textanrisses (Anzahl Zeichen) je Teaser.
+teaser_length: 180
+
+# Mindestbreite einer einzelnen Teaser-Kachel (CSS-Wert, z.B. '260px' oder '18rem').
+# Bestimmt indirekt, wie viele Kacheln nebeneinander passen, bevor umgebrochen wird.
+card_min_width: '260px'
+
+# Reiter (Tabs) anzeigen, wenn mehr als ein Feed konfiguriert ist.
+show_tabs: true
+
+# Fallback-Bild, falls ein Feed-Eintrag kein Teaserbild liefert.
+# Relativer Pfad zu einer Datei im Theme oder eine absolute URL.
+image_fallback: ''
+
+# HTTP-Timeout in Sekunden beim Abruf eines Feeds.
+request_timeout: 8
+
+# Liste der einzubindenden Feeds. Kann im Admin-Panel bearbeitet werden.
+feeds:
+    -
+        name: 'Beispiel Feed'
+        url: 'https://example.com/feed.xml'

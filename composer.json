@@ -1,0 +1,22 @@
+{
+    "name": "chschmidt/grav-plugin-feedteasers",
+    "type": "grav-plugin",
+    "description": "Zeigt Beitrags-Teaser aus externen RSS/Atom-Feeds als klickbare Kacheln an, optional mit Tab-Umschaltung zwischen mehreren Feeds.",
+    "keywords": ["grav", "plugin", "rss", "atom", "feed", "teaser"],
+    "homepage": "https://codeberg.org/chschmidt/grav-plugin-feedteasers",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Christian Schmidt",
+            "email": "chschmidt@noreply.codeberg.org"
+        }
+    ],
+    "require": {
+        "php": ">=7.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Grav\\Plugin\\FeedTeasers\\": "classes/"
+        }
+    }
+}

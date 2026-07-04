@@ -1,0 +1,11 @@
+PLUGIN_FEEDTEASERS:
+    ENABLED: 'Enabled'
+    CACHE_TIME: 'Cache duration (seconds)'
+    ITEMS_PER_FEED: 'Items per feed'
+    TEASER_LENGTH: 'Teaser text length (characters)'
+    REQUEST_TIMEOUT: 'HTTP timeout (seconds)'
+    SHOW_TABS: 'Show tabs'
+    IMAGE_FALLBACK: 'Fallback teaser image'
+    FEEDS: 'Feeds'
+    FEED_NAME: 'Display name'
+    FEED_URL: 'Feed URL'

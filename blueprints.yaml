@@ -1,0 +1,106 @@
+name: Feed Teasers
+version: 1.0.0
+description: Zeigt Beitrags-Teaser aus externen RSS/Atom-Feeds als klickbare Kacheln an.
+icon: rss
+author:
+    name: Christian Schmidt
+    email: chschmidt@noreply.codeberg.org
+homepage: https://codeberg.org/chschmidt/grav-plugin-feedteasers
+keywords: grav, plugin, rss, atom, feed, teaser
+license: MIT
+
+form:
+  validation: strict
+  fields:
+    enabled:
+      type: toggle
+      label: Aktiviert
+      highlight: 1
+      default: 1
+      options:
+        1: Ja
+        0: Nein
+      validate:
+        type: bool
+
+    tabs:
+      type: tabs
+      fields:
+
+        general:
+          type: tab
+          title: Allgemein
+          fields:
+            cache_time:
+              type: number
+              label: Cache-Dauer (Sekunden)
+              validate:
+                min: 60
+                required: true
+
+            items_per_feed:
+              type: number
+              label: Beiträge pro Feed
+              validate:
+                min: 1
+                max: 30
+                required: true
+
+            teaser_length:
+              type: number
+              label: Länge des Textanrisses (Zeichen)
+              validate:
+                min: 40
+                max: 600
+                required: true
+
+            card_min_width:
+              type: text
+              label: Mindestbreite einer Kachel (CSS-Wert, z.B. 260px)
+              help: 'Bestimmt indirekt, wie viele Kacheln pro Zeile passen. Kleinerer Wert = mehr Kacheln nebeneinander.'
+              default: '260px'
+              validate:
+                required: true
+
+            request_timeout:
+              type: number
+              label: HTTP-Timeout (Sekunden)
+              validate:
+                min: 2
+                max: 30
+                required: true
+
+            show_tabs:
+              type: toggle
+              label: Tabs anzeigen (bei mehreren Feeds)
+              default: 1
+              options:
+                1: Ja
+                0: Nein
+              validate:
+                type: bool
+
+            image_fallback:
+              type: text
+              label: Fallback-Teaserbild (Pfad oder URL)
+
+        feeds:
+          type: tab
+          title: Feeds
+          fields:
+            feeds:
+              type: list
+              label: Feeds
+              collapsed: true
+              style: vertical
+              fields:
+                .name:
+                  type: text
+                  label: Anzeigename
+                  validate:
+                    required: true
+                .url:
+                  type: text
+                  label: Feed-URL (RSS oder Atom)
+                  validate:
+                    required: true

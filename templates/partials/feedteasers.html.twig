@@ -1,0 +1,72 @@
+{% set showTabs = config.show_tabs and groups|length > 1 %}
+{% set teaserLength = config.teaser_length|default(180) %}
+{% set fallbackImage = config.image_fallback|default('') %}
+{% set cardMinWidth = config.card_min_width|default('260px') %}
+{% if cardMinWidth matches '/^[0-9.]+(px|rem|em|%)$/' %}
+    {% set cardMinWidthStyle = cardMinWidth %}
+{% else %}
+    {% set cardMinWidthStyle = '260px' %}
+{% endif %}
+
+<div class="feedteasers{{ showTabs ? ' feedteasers--tabbed' : '' }}" style="--feedteasers-card-min-width: {{ cardMinWidthStyle }};">
+
+    {% if showTabs %}
+        <div class="feedteasers__tabs" role="tablist">
+            {% for group in groups %}
+                <button type="button"
+                        class="feedteasers__tab{{ loop.first ? ' is-active' : '' }}"
+                        role="tab"
+                        aria-selected="{{ loop.first ? 'true' : 'false' }}"
+                        data-feedteasers-target="{{ group.id }}">
+                    {{ group.name }}
+                </button>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% for group in groups %}
+        <div class="feedteasers__panel{{ showTabs and not loop.first ? ' is-hidden' : '' }}"
+             id="{{ group.id }}"
+             role="tabpanel">
+
+            {% if not showTabs and groups|length > 1 %}
+                <h3 class="feedteasers__group-title">{{ group.name }}</h3>
+            {% endif %}
+
+            {% if group.items is empty %}
+                <p class="feedteasers__empty">Aktuell keine Beiträge verfügbar.</p>
+            {% else %}
+                <div class="feedteasers__grid">
+                    {% for item in group.items %}
+                        {% set summary = item.summary|default('') %}
+                        {% if summary|length > teaserLength %}
+                            {% set summary = summary|slice(0, teaserLength)|trim ~ '…' %}
+                        {% endif %}
+
+                        <a class="feedteasers__card"
+                           href="{{ item.link }}"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            <span class="feedteasers__thumb">
+                                {% if item.image %}
+                                    <img src="{{ item.image }}" alt="" loading="lazy">
+                                {% elseif fallbackImage %}
+                                    <img src="{{ fallbackImage }}" alt="" loading="lazy">
+                                {% endif %}
+                            </span>
+                            <span class="feedteasers__body">
+                                <span class="feedteasers__title">{{ item.title }}</span>
+                                {% if summary %}
+                                    <span class="feedteasers__summary">{{ summary }}</span>
+                                {% endif %}
+                                {% if item.date %}
+                                    <span class="feedteasers__date">{{ item.date|date('d.m.Y') }}</span>
+                                {% endif %}
+                            </span>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
