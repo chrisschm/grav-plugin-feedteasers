@@ -1,6 +1,10 @@
 name: Feed Teasers
+slug: feed-teasers
+type: plugin
 version: 1.0.0
 description: Zeigt Beitrags-Teaser aus externen RSS/Atom-Feeds als klickbare Kacheln an.
+dependencies:
+  - { name: grav, version: '>=1.7.0' }
 icon: rss
 author:
     name: Christian Schmidt
@@ -8,6 +12,10 @@ author:
 homepage: https://codeberg.org/chschmidt/grav-plugin-feedteasers
 keywords: grav, plugin, rss, atom, feed, teaser
 license: MIT
+compatibility:
+  grav:
+    - '1.7'
+    - '2.0'
 
 form:
   validation: strict
