@@ -1,5 +1,5 @@
 name: Feed Teasers
-slug: feed-teasers
+slug: feedteasers
 type: plugin
 version: 1.0.0
 description: Zeigt Beitrags-Teaser aus externen RSS/Atom-Feeds als klickbare Kacheln an.
