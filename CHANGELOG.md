@@ -1,3 +1,10 @@
+# v1.0.3
+## 07/06/2026
+
+1. [](#bugfix)
+    * The increase of the version number was missing,
+      so the update was never triggered
+
 # v1.0.2
 ## 07/06/2026
 
