@@ -51,7 +51,7 @@
                                 {% if item.image %}
                                     <img src="{{ item.image }}" alt="" loading="lazy">
                                 {% elseif fallbackImage %}
-                                    <img src="{{ fallbackImage }}" alt="" loading="lazy">
+                                    <img src="{{ url(fallbackImage) }}" alt="" loading="lazy">
                                 {% endif %}
                             </span>
                             <span class="feedteasers__body">

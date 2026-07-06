@@ -1,3 +1,9 @@
+# v1.0.2
+## 07/06/2026
+
+1. [](#bugfix)
+    * fallback image was not preprocessed properly
+
 # v1.0.1
 ## 07/06/2026
 
