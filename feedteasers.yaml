@@ -18,8 +18,11 @@ card_min_width: '260px'
 show_tabs: true
 
 # Fallback-Bild, falls ein Feed-Eintrag kein Teaserbild liefert.
-# Relativer Pfad zu einer Datei im Theme oder eine absolute URL.
-image_fallback: ''
+# Akzeptiert einen klassischen Pfad (z.B. '/images/eigenes-bild.jpg'), eine
+# absolute URL (https://...) oder einen Grav-Stream (plugin://, theme://, user://).
+# Standardmäßig wird das mitgelieferte generische Platzhalterbild verwendet.
+# Leer lassen, um ganz auf ein Fallback-Bild zu verzichten.
+image_fallback: 'plugin://feedteasers/images/fallback.png'
 
 # HTTP-Timeout in Sekunden beim Abruf eines Feeds.
 request_timeout: 8

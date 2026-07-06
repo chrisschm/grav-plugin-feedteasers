@@ -86,7 +86,9 @@ Für das Teaserbild wird in dieser Reihenfolge geprüft:
 1. `<enclosure>`-Tag (RSS) mit `type="image/..."`.
 2. `media:thumbnail` / `media:content` (Media-RSS-Namespace).
 3. Erstes `<img>`-Tag im HTML-Inhalt des Beitrags.
-4. Konfiguriertes Fallback-Bild, falls gesetzt.
+4. Konfiguriertes Fallback-Bild, falls gesetzt (Standard: das mitgelieferte
+   `images/fallback.png`, aufgelöst über den `plugin://`-Stream). Leeres Feld
+   im Admin-Panel = kein Fallback-Bild, die Kachel bleibt dann ohne Bildbereich.
 
 ## Fehlerverhalten
 

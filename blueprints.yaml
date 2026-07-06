@@ -1,7 +1,7 @@
 name: Feed Teasers
 slug: feedteasers
 type: plugin
-version: 1.0.0
+version: 1.0.1
 description: Zeigt Beitrags-Teaser aus externen RSS/Atom-Feeds als klickbare Kacheln an.
 dependencies:
   - { name: grav, version: '>=1.7.0' }
@@ -90,7 +90,8 @@ form:
 
             image_fallback:
               type: text
-              label: Fallback-Teaserbild (Pfad oder URL)
+              label: Fallback-Teaserbild
+              help: 'Pfad, absolute URL oder Grav-Stream (z.B. plugin://feedteasers/images/fallback.png, theme://images/eigenes-bild.jpg). Leer lassen für kein Fallback-Bild.'
 
         feeds:
           type: tab
