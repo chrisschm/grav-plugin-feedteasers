@@ -11,7 +11,7 @@ bzw. Stream-Kontext als Fallback).
 
 ## Installation
 
-### GPM (empfohlen, sobald im Grav-Repository gelistet)
+### GPM (empfohlen)
 
 ```
 bin/gpm install feedteasers
@@ -95,6 +95,10 @@ Für das Teaserbild wird in dieser Reihenfolge geprüft:
 Ein einzelner nicht erreichbarer oder fehlerhafter Feed führt nicht zum
 Abbruch der gesamten Ausgabe – er wird übersprungen und der Fehler ins
 Grav-Log geschrieben.
+
+### Fehler melden
+
+Fehler können über den [Bugtracker auf Codeberg](https://codeberg.org/chschmidt/grav-plugin-feedteasers/issues) zurückgemeldet werden.
 
 ## Lizenz
 
