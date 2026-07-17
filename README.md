@@ -100,6 +100,10 @@ Grav-Log geschrieben.
 
 Fehler können über den [Bugtracker auf Codeberg](https://codeberg.org/chschmidt/grav-plugin-feedteasers/issues) zurückgemeldet werden.
 
+## Demo
+
+Eine aktive Installation kann auf der Startseite auf [JCS-Net.de](https://www.jcs-net.de) betrachtet werden.
+
 ## Lizenz
 
 MIT
