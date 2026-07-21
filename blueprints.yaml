@@ -1,7 +1,7 @@
 name: Feed Teasers
 slug: feedteasers
 type: plugin
-version: 1.0.3
+version: 1.0.5
 description: Zeigt Beitrags-Teaser aus externen RSS/Atom-Feeds als klickbare Kacheln an.
 dependencies:
   - { name: grav, version: '>=1.7.0' }
