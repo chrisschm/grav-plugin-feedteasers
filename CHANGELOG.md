@@ -1,3 +1,10 @@
+# v1.0.4
+## 07/21/2026
+
+1. [](#new)
+    * added bugtracker and documentation links
+      to admin panel
+
 # v1.0.3
 ## 07/06/2026
 

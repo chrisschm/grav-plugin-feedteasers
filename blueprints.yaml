@@ -9,8 +9,11 @@ icon: rss
 author:
     name: Christian Schmidt
     email: chschmidt@noreply.codeberg.org
+    url: https://www.jcs-net.de
 homepage: https://codeberg.org/chschmidt/grav-plugin-feedteasers
 keywords: grav, plugin, rss, atom, feed, teaser
+bugs: https://codeberg.org/chschmidt/grav-plugin-feedteasers/issues
+docs: https://codeberg.org/chschmidt/grav-plugin-feedteasers/wiki
 license: MIT
 compatibility:
   grav:

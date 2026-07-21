@@ -104,6 +104,10 @@ Fehler können über den [Bugtracker auf Codeberg](https://codeberg.org/chschmid
 
 Eine aktive Installation kann auf der Startseite auf [JCS-Net.de](https://www.jcs-net.de) betrachtet werden.
 
+## Dokumentation
+
+Eine Dokumentation befindet sich im Aufbau: [Wiki](https://codeberg.org/chschmidt/grav-plugin-feedteasers/wiki)
+
 ## Lizenz
 
 MIT
