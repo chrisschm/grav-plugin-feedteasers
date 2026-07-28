@@ -1,3 +1,15 @@
+# v1.0.6
+## 07/28/2026
+
+1. [](#new)
+    * i18l functionality added (de/en), plugin description stays german
+
+# v1.0.5
+## 07/21/2026
+
+1. [](#bugfix)
+    * version number fixed
+
 # v1.0.4
 ## 07/21/2026
 
