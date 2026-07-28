@@ -25,12 +25,12 @@ form:
   fields:
     enabled:
       type: toggle
-      label: Aktiviert
+      label: PLUGIN_FEEDTEASERS.ENABLED
       highlight: 1
       default: 1
       options:
-        1: Ja
-        0: Nein
+        1: PLUGIN_ADMIN.YES
+        0: PLUGIN_ADMIN.NO
       validate:
         type: bool
 
@@ -40,18 +40,18 @@ form:
 
         general:
           type: tab
-          title: Allgemein
+          title: PLUGIN_FEEDTEASERS.TAB_GENERAL
           fields:
             cache_time:
               type: number
-              label: Cache-Dauer (Sekunden)
+              label: PLUGIN_FEEDTEASERS.CACHE_TIME
               validate:
                 min: 60
                 required: true
 
             items_per_feed:
               type: number
-              label: Beiträge pro Feed
+              label: PLUGIN_FEEDTEASERS.ITEMS_PER_FEED
               validate:
                 min: 1
                 max: 30
@@ -59,7 +59,7 @@ form:
 
             teaser_length:
               type: number
-              label: Länge des Textanrisses (Zeichen)
+              label: PLUGIN_FEEDTEASERS.TEASER_LENGTH
               validate:
                 min: 40
                 max: 600
@@ -67,15 +67,15 @@ form:
 
             card_min_width:
               type: text
-              label: Mindestbreite einer Kachel (CSS-Wert, z.B. 260px)
-              help: 'Bestimmt indirekt, wie viele Kacheln pro Zeile passen. Kleinerer Wert = mehr Kacheln nebeneinander.'
+              label: PLUGIN_FEEDTEASERS.CARD_MIN_WIDTH
+              help: PLUGIN_FEEDTEASERS.CARD_MIN_WIDTH_HELP
               default: '260px'
               validate:
                 required: true
 
             request_timeout:
               type: number
-              label: HTTP-Timeout (Sekunden)
+              label: PLUGIN_FEEDTEASERS.REQUEST_TIMEOUT
               validate:
                 min: 2
                 max: 30
@@ -83,36 +83,36 @@ form:
 
             show_tabs:
               type: toggle
-              label: Tabs anzeigen (bei mehreren Feeds)
+              label: PLUGIN_FEEDTEASERS.SHOW_TABS
               default: 1
               options:
-                1: Ja
-                0: Nein
+                1: PLUGIN_ADMIN.YES
+                0: PLUGIN_ADMIN.NO
               validate:
                 type: bool
 
             image_fallback:
               type: text
-              label: Fallback-Teaserbild
-              help: 'Pfad, absolute URL oder Grav-Stream (z.B. plugin://feedteasers/images/fallback.png, theme://images/eigenes-bild.jpg). Leer lassen für kein Fallback-Bild.'
+              label: PLUGIN_FEEDTEASERS.IMAGE_FALLBACK
+              help: PLUGIN_FEEDTEASERS.IMAGE_FALLBACK_HELP
 
         feeds:
           type: tab
-          title: Feeds
+          title: PLUGIN_FEEDTEASERS.TAB_FEEDS
           fields:
             feeds:
               type: list
-              label: Feeds
+              label: PLUGIN_FEEDTEASERS.FEEDS
               collapsed: true
               style: vertical
               fields:
                 .name:
                   type: text
-                  label: Anzeigename
+                  label: PLUGIN_FEEDTEASERS.FEED_NAME
                   validate:
                     required: true
                 .url:
                   type: text
-                  label: Feed-URL (RSS oder Atom)
+                  label: PLUGIN_FEEDTEASERS.FEED_URL
                   validate:
                     required: true
