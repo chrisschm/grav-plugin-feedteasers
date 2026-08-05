@@ -14,7 +14,7 @@ jobs:
           fetch-depth: 0
 
       - name: Geänderte Dateien ermitteln
-        run:
+        run: |
           BASE="${{ github.event.before }}"
           if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ]; then
             BASE=$(git rev-list --max-parents=0 HEAD)
@@ -23,7 +23,7 @@ jobs:
           cat changed.txt
 
       - name: PHP-Syntax prüfen
-        run:
+        run: |
           # Prüfen, ob PHP-Dateien in der Liste sind
           PHP_FILES=$(grep -E '\.php$' changed.txt || true)
           if [ -z "$PHP_FILES" ]; then
@@ -33,7 +33,7 @@ jobs:
           echo "$PHP_FILES" | xargs -r -n1 php -l
 
       - name: JS-Syntax prüfen
-        run:
+        run: |
           # Prüfen, ob JS-Dateien in der Liste sind
           JS_FILES=$(grep -E '\.js$' changed.txt || true)
           if [ -z "$JS_FILES" ]; then
