@@ -7,12 +7,21 @@ on:
 jobs:
   syntax-php-js:
     if: github.server_url != 'https://github.com'
-    runs-on: codeberg-tiny
+    runs-on: codeberg-small
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      - name: PHP und Composer bereitstellen
+        run: |
+          # Prüfen ob PHP da ist, ggf. Composer installieren falls nicht im Runner enthalten
+          if ! command -v composer &> /dev/null; then
+            php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+            php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+            php -r "unlink('composer-setup.php');"
+          fi
+      
       - name: Geänderte Dateien ermitteln
         run: |
           BASE="${{ github.event.before }}"
@@ -42,29 +51,18 @@ jobs:
           fi
           echo "$JS_FILES" | xargs -r -n1 node --check
 
-  syntax-twig:
-    if: github.server_url != 'https://github.com'
-    runs-on: codeberg-small
-    container: composer:2
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Geänderte Dateien ermitteln
-        run: |
-          BASE="${{ github.event.before }}"
-          if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ]; then
-            BASE=$(git rev-list --max-parents=0 HEAD)
-          fi
-          git diff --name-only --diff-filter=d "$BASE" HEAD > changed.txt || true
-          cat changed.txt
-
       - name: Twig-Syntax prüfen
         run: |
+          TWIG_FILES=$(grep -E '\.twig$' changed.txt || true)
+          if [ -z "$TWIG_FILES" ]; then
+            echo "Keine Twig-Dateien geändert."
+            exit 0
+          fi
+
           mkdir -p /tmp/twig-lint
           composer require --working-dir=/tmp/twig-lint twig/twig --no-interaction --quiet
-          grep -E '\.twig$' changed.txt | while read -r f; do
+
+          echo "$TWIG_FILES" | while read -r f; do
             [ -f "$f" ] || continue
             php -r '
               require "/tmp/twig-lint/vendor/autoload.php";
