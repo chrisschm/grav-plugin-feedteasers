@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  syntax-php-js:
+  syntax-php-js-twig:
     if: github.server_url != 'https://github.com'
     runs-on: codeberg-small
     steps:
