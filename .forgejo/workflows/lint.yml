@@ -15,7 +15,7 @@ jobs:
           fetch-depth: 0
 
       - name: PHP und Composer bereitstellen
-        uses: https://github.com/shivammathur/setup-php@v2
+        uses: https://github.com/shivammathur/setup-php@v2 # Image explizit von Github anfordern
         with:
           php-version: '8.3' # Gewünschte Version wählen
           tools: composer:v2
