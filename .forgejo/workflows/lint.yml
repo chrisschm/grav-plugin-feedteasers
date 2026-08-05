@@ -2,6 +2,8 @@ name: Syntax-Checks
 
 on:
   push:
+   branches:
+      - develop
   pull_request:
 
 jobs:
