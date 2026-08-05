@@ -28,7 +28,7 @@ jobs:
 
       - name: Abhängigkeiten installieren
         run: composer install --no-interaction --prefer-dist
-      
+
       - name: Geänderte Dateien ermitteln
         run: |
           BASE="${{ github.event.before }}"
@@ -76,6 +76,21 @@ jobs:
               $file = $argv[1];
               $loader = new \Twig\Loader\ArrayLoader([]);
               $twig = new \Twig\Environment($loader);
+
+              // Grav und Plugins registrieren eigene Twig-Funktionen/-Filter
+              // (z. B. url(), nicetime(), t() ...), die in diesem isolierten
+              // Lint-Environment naturgemäß unbekannt sind. Ohne diese
+              // Fallbacks würde jede Verwendung einer solchen Funktion
+              // fälschlich als Fehler gemeldet, obwohl die Twig-Syntax
+              // korrekt ist. Die Fallbacks erlauben jeden Namen, ohne ihn
+              // auszuführen - reine Syntaxprüfung, keine echte Ausführung.
+              $twig->registerUndefinedFunctionCallback(function ($name) {
+                  return new \Twig\TwigFunction($name, function () {});
+              });
+              $twig->registerUndefinedFilterCallback(function ($name) {
+                  return new \Twig\TwigFilter($name, function ($v) { return $v; });
+              });
+
               try {
                   $twig->parse($twig->tokenize(new \Twig\Source(file_get_contents($file), $file)));
                   echo "$file: OK\n";
