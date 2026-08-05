@@ -22,6 +22,11 @@ jobs:
    #         php composer-setup.php --install-dir=/usr/local/bin --filename=composer
    #         php -r "unlink('composer-setup.php');"
    #       fi
+      - name: Composer bereitstellen
+        run: |
+          curl -sS https://getcomposer.org/installer | php
+          sudo mv composer.phar /usr/local/bin/composer
+          composer --version
       
       - name: Geänderte Dateien ermitteln
         run: |
