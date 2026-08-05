@@ -92,6 +92,13 @@ Known gap: the frontend string "Aktuell keine Beiträge verfügbar." in
 `templates/partials/feedteasers.html.twig` is not yet translatable (frontend/user-facing scope,
 deliberately out of scope for the admin-i18n work so far).
 
+**Translation contributions:** since these language files are simple key/value YAML, they're a
+good fit for community translation via [Codeberg Translate](https://translate.codeberg.org/engage/grav-plugin-feedteasers/)
+(hosted Weblate), configured with `languages/en.yaml` as the source language. This only covers the
+`PLUGIN_FEEDTEASERS.*` keys resolved through `form.fields` — it does **not** cover the
+non-translated top-level `name`/`description` described above, since those aren't part of the
+Weblate component's scope. See `CONTRIBUTING.md` for the contributor-facing workflow.
+
 ## Notable past bugs (useful context before touching related code)
 
 1. **Missing `onTwigTemplatePaths`** → Twig crash on direct `{% include %}`.
@@ -128,7 +135,10 @@ zum Absturz bringen (Exception wird abgefangen, geloggt, leeres Array zurückgeg
 
 Die oberste Ebene von `blueprints.yaml` (`name`/`description`) wird von Admin Next **nicht**
 automatisch übersetzt — bewusst als deutscher Klartext belassen, nur Felder innerhalb von
-`form.fields` nutzen Sprachschlüssel.
+`form.fields` nutzen Sprachschlüssel. Übersetzungen dieser Sprachschlüssel laufen über
+[Codeberg Translate](https://translate.codeberg.org/engage/grav-plugin-feedteasers/)
+(Basissprache: `languages/en.yaml`) — Details zum Contributor-Workflow stehen in
+`CONTRIBUTING.md`, nicht hier.
 
 Drei dokumentierte Altbugs (fehlendes `onTwigTemplatePaths`, `mergeConfig(null, true)`-TypeError,
 fehlendes `url()` um das Fallback-Bild) sind im Abschnitt "Notable past bugs" oben als Kontext

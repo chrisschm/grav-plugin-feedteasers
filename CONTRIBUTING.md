@@ -38,6 +38,21 @@ use case, please open an issue first to discuss it before investing time in a PR
    against, and whether you tested both the Twig function and the `[feedteasers]` shortcode if relevant).
 5. Keep changes focused — smaller, single-purpose PRs are much easier to review than large ones.
 
+## Translations
+
+Admin panel translations are managed via [Codeberg Translate](https://translate.codeberg.org/engage/grav-plugin-feedteasers/)
+(a hosted Weblate instance), **not** through regular pull requests. If you'd like to add or
+improve a translation, please use that web interface instead of editing `languages/*.yaml`
+directly — changes made there are reviewed as a pull request before being merged.
+
+- The source/base language is `languages/en.yaml`. If you're adding a *new* translatable string
+  (not just translating an existing one), it needs to be added there first as part of a regular
+  code PR — only then does it show up in Weblate for translators to pick up.
+- The top-level `name`/`description` fields in `blueprints.yaml` are intentionally **not** part
+  of this translation setup (see `docs/ARCHITECTURE.md` for why) and stay as plain German text.
+
+[![Translation status](https://translate.codeberg.org/widget/grav-plugin-feedteasers/svg-badge.svg)](https://translate.codeberg.org/engage/grav-plugin-feedteasers/)
+
 ## Configuration & code overview
 
 - `feedteasers.php` — plugin events, caching, rendering
@@ -69,6 +84,12 @@ contribution is provided under the same license.
 **Dieses GitHub-Repository ist nur ein Lese-Mirror.** Die eigentliche Entwicklung findet auf
 [Codeberg](https://codeberg.org/chschmidt/grav-plugin-feedteasers) statt. Bitte Bugs/Feature-Wünsche und
 Pull Requests dort einreichen.
+
+**Übersetzungen:** Admin-Panel-Übersetzungen laufen über [Codeberg Translate](https://translate.codeberg.org/engage/grav-plugin-feedteasers/)
+(Weblate), nicht über normale Pull Requests. Bitte dafür die Weblate-Oberfläche nutzen statt
+`languages/*.yaml` direkt zu bearbeiten. Neue (noch nicht vorhandene) Textbausteine müssen zuerst
+per regulärem Code-PR in `languages/en.yaml` (Basissprache) landen, bevor sie in Weblate zur
+Übersetzung erscheinen.
 
 **Design-Ziele:** GPM-fähig ohne manuellen Eingriff, keine externen Composer-Abhängigkeiten (nur
 eingebaute PHP-Erweiterungen), bedienbar auch ohne Twig-Kenntnisse (`[feedteasers]`-Shortcode). Bei

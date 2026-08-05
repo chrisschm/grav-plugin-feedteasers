@@ -1,5 +1,7 @@
 # Feed Teasers Plugin for Grav CMS
 
+[![Translation status](https://translate.codeberg.org/widget/grav-plugin-feedteasers/svg-badge.svg)](https://translate.codeberg.org/engage/grav-plugin-feedteasers/)
+
 Zeigt Beiträge aus externen RSS- oder Atom-Feeds als klickbare Teaser-Kacheln
 an (Mini-Teaserbild, Titel, Textanriss). Bei mehreren konfigurierten Feeds
 kann optional per Tab-Reiter zwischen ihnen umgeschaltet werden. Ein Klick
@@ -99,6 +101,12 @@ Grav-Log geschrieben.
 ### Fehler melden
 
 Fehler können über den [Bugtracker auf Codeberg](https://codeberg.org/chschmidt/grav-plugin-feedteasers/issues) zurückgemeldet werden.
+
+## Übersetzung
+
+Das Admin-Panel kann über [Codeberg Translate](https://translate.codeberg.org/engage/grav-plugin-feedteasers/)
+in weitere Sprachen übersetzt werden – direkt im Browser, ohne Git- oder Code-Kenntnisse.
+Aktuell verfügbar: Deutsch und Englisch.
 
 ## Demo
 
