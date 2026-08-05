@@ -14,19 +14,20 @@ jobs:
         with:
           fetch-depth: 0
 
-   #   - name: PHP und Composer bereitstellen
-   #     run: |
-   #       # Prüfen ob PHP da ist, ggf. Composer installieren falls nicht im Runner enthalten
-   #       if ! command -v composer &> /dev/null; then
-   #         php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-   #         php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-   #         php -r "unlink('composer-setup.php');"
-   #       fi
-      - name: Composer bereitstellen
+      - name: PHP und Composer bereitstellen
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3' # Gewünschte Version wählen
+          tools: composer:v2
+          coverage: none # Optional: Code-Coverage Treiber sparen Zeit
+
+      - name: PHP und Composer Version anzeigen
         run: |
-          curl -sS https://getcomposer.org/installer | php
-          sudo mv composer.phar /usr/local/bin/composer
+          php -v
           composer --version
+
+      - name: Abhängigkeiten installieren
+        run: composer install --no-interaction --prefer-dist
       
       - name: Geänderte Dateien ermitteln
         run: |
