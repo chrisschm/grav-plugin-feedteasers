@@ -9,18 +9,19 @@ jobs:
     if: github.server_url != 'https://github.com'
     runs-on: codeberg-small
     steps:
-      - uses: actions/checkout@v4
+      - name: Code auschecken
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: PHP und Composer bereitstellen
-        run: |
-          # Prüfen ob PHP da ist, ggf. Composer installieren falls nicht im Runner enthalten
-          if ! command -v composer &> /dev/null; then
-            php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-            php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-            php -r "unlink('composer-setup.php');"
-          fi
+   #   - name: PHP und Composer bereitstellen
+   #     run: |
+   #       # Prüfen ob PHP da ist, ggf. Composer installieren falls nicht im Runner enthalten
+   #       if ! command -v composer &> /dev/null; then
+   #         php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+   #         php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+   #         php -r "unlink('composer-setup.php');"
+   #       fi
       
       - name: Geänderte Dateien ermitteln
         run: |
