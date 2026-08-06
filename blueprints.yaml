@@ -1,7 +1,7 @@
 name: Feed Teasers
 slug: feedteasers
 type: plugin
-version: 1.0.6
+version: 1.0.7
 description: Zeigt Beitrags-Teaser aus externen RSS/Atom-Feeds als klickbare Kacheln an.
 dependencies:
   - { name: grav, version: '>=1.7.0' }
@@ -80,6 +80,11 @@ form:
                 min: 2
                 max: 30
                 required: true
+
+            ssrf_allowed_hosts_hint:
+              type: display
+              markdown: true
+              content: PLUGIN_FEEDTEASERS.SSRF_ALLOWED_HOSTS_HINT
 
             show_tabs:
               type: toggle

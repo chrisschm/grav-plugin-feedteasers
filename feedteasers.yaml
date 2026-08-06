@@ -27,6 +27,16 @@ image_fallback: 'plugin://feedteasers/images/fallback.png'
 # HTTP-Timeout in Sekunden beim Abruf eines Feeds.
 request_timeout: 8
 
+# SSRF-Schutz: Jede tatsaechlich kontaktierte Adresse (inkl. jedes
+# HTTP-Redirect-Ziels) wird vor dem Abruf geprueft und private/lokale
+# Adressen (Loopback, RFC1918, Link-Local/Cloud-Metadaten, ...) werden
+# grundsaetzlich blockiert. Diese Liste ist nur fuer den seltenen Fall
+# gedacht, dass ein Feed absichtlich auf einer solchen Adresse liegt
+# (z.B. ein selbst gehosteter Feed im internen Netz) - Hostnamen oder
+# IP-Adressen eintragen, die trotzdem erlaubt sein sollen. Normalerweise
+# leer lassen. Kein Admin-Panel-Feld, nur ueber diese Datei konfigurierbar.
+ssrf_allowed_hosts: []
+
 # Liste der einzubindenden Feeds. Kann im Admin-Panel bearbeitet werden.
 feeds:
     -

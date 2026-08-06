@@ -1,3 +1,13 @@
+# v1.0.7
+## 08/06/2026
+
+1. [](#new)
+    * SSRF protection for feed fetching (`classes/Http/SsrfGuard.php`): 
+      private/local addresses are blocked, HTTP redirects are followed manually
+      with each hop re-checked, and the IP is pinned via `CURLOPT_RESOLVE` to
+      prevent DNS rebinding. New optional configuration setting
+      `ssrf_allowed_hosts` (only in `feedteasers.yaml`, no admin interface field).
+
 # v1.0.6
 ## 07/28/2026
 

@@ -25,7 +25,7 @@ use case, please open an issue first to discuss it before investing time in a PR
 
 1. **Target branch:** please branch from and target `main`. (`develop` is used internally for staging
    larger changes and isn't part of the external contribution workflow — you don't need to worry about it.)
-2. **PHP version:** the plugin supports PHP >= 7.4 (see `composer.json`). Please avoid syntax or
+2. **PHP version:** the plugin supports PHP >= 8.0 (see `composer.json`). Please avoid syntax or
    functions that require a newer PHP version unless you also raise the requirement in `composer.json`
    *and* discuss it in an issue first — this affects every user on shared/older hosting.
 3. **Syntax check:** there is currently no automated lint/test step in CI for pull requests. Please run a
@@ -97,7 +97,7 @@ größeren Änderungen, die daran rütteln würden, bitte vorher ein Issue eröf
 
 **Vor einem Pull Request:**
 - Ziel-Branch ist immer `main` (nicht `develop` — der ist intern für größere Umbauten).
-- Unterstützt wird PHP >= 7.4 (siehe `composer.json`). Neuere PHP-Syntax bitte nur nach Rücksprache
+- Unterstützt wird PHP >= 8.0 (siehe `composer.json`). Neuere PHP-Syntax bitte nur nach Rücksprache
   in einem Issue verwenden, das betrifft sonst Nutzer auf älteren/Shared-Hostings.
 - Es gibt aktuell **keinen automatisierten Lint/Test-Schritt** in der CI. Bitte selbst `php -l` auf
   geänderten PHP-Dateien laufen lassen.

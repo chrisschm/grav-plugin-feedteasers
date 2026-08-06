@@ -36,6 +36,8 @@ particularly welcome around:
 - Unsafe handling of feed content when rendered in templates (e.g. XSS via feed titles/descriptions)
 - Handling of the `card_min_width` admin field or other user-configurable values that end up in
   CSS/HTML output
+- SSRF when fetching a configured feed URL, including via HTTP redirect targets
+  (see `classes/Http/SsrfGuard.php`)
 
 General Grav core or hosting/infrastructure vulnerabilities are out of scope here — please report
 those to the Grav project or your hosting provider directly.
@@ -52,3 +54,8 @@ Unterstützt wird nur die jeweils aktuelle, über GPM veröffentlichte Version. 
 Solo-Projekt ohne dediziertes Security-Team handelt, bitte etwas Zeit für einen Fix einplanen,
 bevor öffentlich darüber gesprochen wird — ich melde mich zeitnah zurück und stimme einen
 Offenlegungszeitpunkt mit dir ab.
+
+Besonders willkommen sind Hinweise zu: XML-Parsing (XXE, Entity-Expansion) in
+`classes/FeedParser.php`, unsicherer Umgabe mit Feed-Inhalten in Templates (XSS), dem
+`card_min_width`-Admin-Feld sowie SSRF beim Feed-Abruf inklusive Redirect-Zielen
+(siehe `classes/Http/SsrfGuard.php`).

@@ -159,7 +159,8 @@ class FeedteasersPlugin extends Plugin
                 continue;
             }
 
-            $items = $this->getFeedItems($url, (int) $config['cache_time'], (int) $config['request_timeout']);
+            $allowedPrivateHosts = (array) ($config['ssrf_allowed_hosts'] ?? []);
+            $items = $this->getFeedItems($url, (int) $config['cache_time'], (int) $config['request_timeout'], $allowedPrivateHosts);
             $items = array_slice($items, 0, (int) $config['items_per_feed']);
 
             $groups[] = [
@@ -181,7 +182,7 @@ class FeedteasersPlugin extends Plugin
      * Gibt bei Fehlern ein leeres Array zurueck, damit ein einzelner
      * kaputter Feed nicht die ganze Seite zum Absturz bringt.
      */
-    private function getFeedItems(string $url, int $cacheTime, int $timeout): array
+    private function getFeedItems(string $url, int $cacheTime, int $timeout, array $allowedPrivateHosts = []): array
     {
         /** @var \Grav\Common\Cache $cache */
         $cache = $this->grav['cache'];
@@ -193,7 +194,7 @@ class FeedteasersPlugin extends Plugin
         }
 
         try {
-            $items = FeedParser::fetchAndParse($url, $timeout);
+            $items = FeedParser::fetchAndParse($url, $timeout, $allowedPrivateHosts);
         } catch (\Throwable $e) {
             $this->grav['log']->warning('[feedteasers] Feed konnte nicht geladen werden (' . $url . '): ' . $e->getMessage());
             $items = [];

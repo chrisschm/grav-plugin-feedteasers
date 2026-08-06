@@ -8,6 +8,18 @@ PLUGIN_FEEDTEASERS:
     CARD_MIN_WIDTH: 'Minimum card width (CSS value, e.g. 260px)'
     CARD_MIN_WIDTH_HELP: 'Indirectly controls how many cards fit per row. Smaller value = more cards side by side.'
     REQUEST_TIMEOUT: 'HTTP timeout (seconds)'
+    SSRF_ALLOWED_HOSTS_HINT: |
+        For security reasons (SSRF protection), the plugin rejects requests to
+        private/local/internal addresses when fetching a feed by default (e.g. 127.0.0.1,
+        10.0.0.0/8, 169.254.169.254, ::1) - even if a feed redirects there via HTTP.
+        If you deliberately want to include an internal feed, you can allow-list it
+        explicitly, directly in `user/config/plugins/feedteasers.yaml`:
+        ```yaml
+        ssrf_allowed_hosts:
+          - 'feed.internal.example'
+        ```
+        **Warning:** any host listed here becomes reachable from the server, even if it's
+        on an internal network - only add hosts you trust.
     SHOW_TABS: 'Show tabs (when there are multiple feeds)'
     IMAGE_FALLBACK: 'Fallback teaser image'
     IMAGE_FALLBACK_HELP: 'Path, absolute URL or Grav stream (e.g. plugin://feedteasers/images/fallback.png, theme://images/my-image.jpg). Leave empty for no fallback image.'

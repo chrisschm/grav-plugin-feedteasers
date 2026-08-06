@@ -59,6 +59,7 @@ the same fix.
 | `card_min_width` | CSS minimum card width (CSS custom property; validated against the regex `^[0-9.]+(px\|rem\|em\|%)$` — prevents CSS injection via the Admin field) |
 | `image_fallback` | Fallback image: path/URL/Grav stream, default `plugin://feedteasers/images/fallback.png` |
 | `request_timeout` | HTTP timeout for feed fetching |
+| `ssrf_allowed_hosts` | Opt-in list of hostnames/IPs that may resolve to a private/local address anyway (e.g. an internal feed). Config-file only (`feedteasers.yaml`); the Admin panel only shows an explanatory `display`-type hint (`ssrf_allowed_hosts_hint` in `blueprints.yaml`), not an editable field. |
 
 If you add a new configurable option, it needs an entry in `blueprints.yaml`, a default in
 `feedteasers.yaml`, and — if it's user-facing text — translation keys in `languages/*.yaml`
@@ -75,6 +76,28 @@ Atom links require explicitly checking for `rel="alternate"` — otherwise the w
 be picked up. HTTP fetching uses `cURL` (preferred) or `file_get_contents` with a stream context
 as a fallback. A single broken feed throws an exception that is caught (logged, empty array
 returned) — it must never take the whole page down.
+
+## SSRF protection (`classes/Http/SsrfGuard.php`)
+
+Every URL that `FeedParser::httpGet()` actually contacts — including every individual HTTP
+redirect target — is validated by `SsrfGuard` before the connection is made: scheme restricted to
+`http`/`https`, and the resolved IP(s) checked against private/reserved ranges (RFC1918, loopback,
+link-local/cloud metadata such as `169.254.169.254`, CGNAT, TEST-NET, multicast, IPv4-mapped IPv6,
+`localhost`/`*.localhost`).
+
+Redirects are therefore **not** auto-followed by cURL (`CURLOPT_FOLLOWLOCATION` is off); instead
+`httpGet()` follows them manually, one hop at a time (max 5, with loop detection), re-running the
+guard on each new target before connecting. On the cURL path the already-validated IP is pinned via
+`CURLOPT_RESOLVE`, so the connection cannot be redirected to a different address between check and
+connect (DNS rebinding). The `file_get_contents` fallback (used only if cURL is unavailable) still
+runs every hop through the guard, but can't pin the IP the same way — a narrow rebinding window
+exists there in theory, acceptable given `cURL` is virtually always present in practice.
+
+A configured feed URL is admin-supplied and thus more trusted than, say, a value coming from a
+public shortcode attribute — but that alone doesn't protect against a legitimate feed later being
+redirected (compromise, misconfiguration, or a deliberately malicious response) to an internal
+address, which is what this guards against. Rare intentional exceptions (e.g. a self-hosted feed
+on an internal network) can be allow-listed via `ssrf_allowed_hosts` in `feedteasers.yaml`.
 
 ## Admin panel translations
 
@@ -132,6 +155,12 @@ Die Bildermittlung in `FeedParser.php` folgt einer festen Reihenfolge (`<enclosu
 Media-RSS-Namespace → erstes `<img>` im HTML → konfiguriertes Fallback-Bild), Atom-Links brauchen
 eine explizite `rel="alternate"`-Prüfung. Ein einzelner kaputter Feed darf nie die ganze Seite
 zum Absturz bringen (Exception wird abgefangen, geloggt, leeres Array zurückgegeben).
+
+Jede tatsächlich kontaktierte Adresse beim Feed-Abruf — inklusive jedes einzelnen
+HTTP-Redirect-Ziels — wird vor der Verbindung durch `SsrfGuard` geprüft (Schema, aufgelöste IP
+gegen private/reservierte Bereiche). Redirects werden deshalb manuell statt automatisch von cURL
+verfolgt, mit erneuter Prüfung pro Hop und IP-Pinning gegen DNS-Rebinding. Details siehe Abschnitt
+"SSRF protection" oben.
 
 Die oberste Ebene von `blueprints.yaml` (`name`/`description`) wird von Admin Next **nicht**
 automatisch übersetzt — bewusst als deutscher Klartext belassen, nur Felder innerhalb von
