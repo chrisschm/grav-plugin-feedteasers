@@ -1,0 +1,31 @@
+PLUGIN_FEEDTEASERS:
+  ENABLED: Kasutusel
+  TAB_GENERAL: Üldseadistused
+  TAB_FEEDS: Uudisvood
+  CACHE_TIME: Puhverdamise kestus (sekundites)
+  ITEMS_PER_FEED: Kirjeid uudisvoo kohta
+  TEASER_LENGTH: Sissejuhatava teksti pikkus (tähemärkides)
+  CARD_MIN_WIDTH: Kaardi miinimumlaius (CSS-i väärtus, nt. 260px)
+  CARD_MIN_WIDTH_HELP: See kaudselt juhib kui mitu kaarti mahub reale. Väiksem 
+    väärtus tähendab suuremat kõrvuti asuvate kaartide arvu.
+  REQUEST_TIMEOUT: HTTP-päringu aegumine (sekundites)
+  SHOW_TABS: Näita vahekaarte (kui kasutusel on mitu uudisvoogu)
+  FEEDS: Uudisvood
+  FEED_NAME: Kuvatav nimi
+  FEED_URL: Uudisvoo võrguaadress (RSS või Atom)
+  SSRF_ALLOWED_HOSTS_HINT: |
+    Turvalisuse tagamiseks (SSRF-kaitse) keeldub see lisamoodul vaikimisi päringutest
+    privaatses/kohalikus/sisevõrgus asuvatele aadressidele uudisvoo laadimisel (nt 127.0.0.1,
+    10.0.0.0/8, 169.254.169.254, ::1), seda isegi juhul, kui uudisvoog suunab sinna ümber HTTP-protokolli kaudu.
+    Kui soovid sisemist uudisvoogu teadlikult kasutada, võid selle
+    selgesõnaliselt lubatud nimekirja lisada otse failis `user/config/plugins/feedteasers.yaml`:
+    ```yaml
+    ssrf_allowed_hosts:
+      - 'feed.internal.example'
+    ```
+    **Hoiatus:** kõik siin loetletud hostid muutuvad serverist kättesaadavaks, isegi kui need asuvad
+    sisevõrgus, seega lisa ainult neid hoste, mida usaldad.
+  IMAGE_FALLBACK: Peibutuspildi tagavaravariant
+  IMAGE_FALLBACK_HELP: Asukoht serveris, absoluutne võrguaadress või Gravi 
+    sisuvoog (nt. plugin://feedteasers/images/fallback.png, 
+    theme://images/my-image.jpg). Kui jätad tühjaks, siis tagavarapilti pole.
