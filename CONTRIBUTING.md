@@ -43,7 +43,11 @@ use case, please open an issue first to discuss it before investing time in a PR
 Admin panel translations are managed via [Codeberg Translate](https://translate.codeberg.org/engage/grav-plugin-feedteasers/)
 (a hosted Weblate instance), **not** through regular pull requests. If you'd like to add or
 improve a translation, please use that web interface instead of editing `languages/*.yaml`
-directly — changes made there are reviewed as a pull request before being merged.
+directly.
+
+- Weblate pushes translation changes to a dedicated `translate` branch, not `main`. Maintainers
+  periodically bring finished/sufficiently complete language files over to `main` by hand — as a
+  translator you don't need to open a pull request or worry about branches yourself.
 
 - The source/base language is `languages/en.yaml`. If you're adding a *new* translatable string
   (not just translating an existing one), it needs to be added there first as part of a regular
@@ -87,9 +91,11 @@ Pull Requests dort einreichen.
 
 **Übersetzungen:** Admin-Panel-Übersetzungen laufen über [Codeberg Translate](https://translate.codeberg.org/engage/grav-plugin-feedteasers/)
 (Weblate), nicht über normale Pull Requests. Bitte dafür die Weblate-Oberfläche nutzen statt
-`languages/*.yaml` direkt zu bearbeiten. Neue (noch nicht vorhandene) Textbausteine müssen zuerst
-per regulärem Code-PR in `languages/en.yaml` (Basissprache) landen, bevor sie in Weblate zur
-Übersetzung erscheinen.
+`languages/*.yaml` direkt zu bearbeiten. Weblate pusht dabei auf einen eigenen Branch
+`translate`, nicht auf `main` — als Übersetzer:in müssen Sie sich um Branches oder Pull Requests
+nicht kümmern, die Maintainer übernehmen fertige Sprachdateien manuell nach `main`. Neue (noch nicht
+vorhandene) Textbausteine müssen zuerst per regulärem Code-PR in `languages/en.yaml` (Basissprache)
+landen, bevor sie in Weblate zur Übersetzung erscheinen.
 
 **Design-Ziele:** GPM-fähig ohne manuellen Eingriff, keine externen Composer-Abhängigkeiten (nur
 eingebaute PHP-Erweiterungen), bedienbar auch ohne Twig-Kenntnisse (`[feedteasers]`-Shortcode). Bei
