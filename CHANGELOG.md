@@ -1,5 +1,5 @@
 # v1.0.8
-## unreleased
+## 08/09/2026
 
 1. [](#new)
    * Estonian language file added
