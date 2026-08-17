@@ -17,6 +17,8 @@ These apply to any future change (see also `CONTRIBUTING.md`):
 - Must stay installable via GPM without any manual step by the end user.
 - No external PHP dependencies — no third-party Composer packages. RSS/Atom parsing relies
   exclusively on built-in PHP extensions (`SimpleXMLElement`, `cURL`/stream fallback).
+- Requires PHP >= 8.0 (see `composer.json`); avoid syntax or functions that need a newer
+  version unless you also raise the requirement there and in `CONTRIBUTING.md`.
 - Must remain usable by site owners without IT/Twig knowledge.
 
 ## File layout
@@ -134,22 +136,21 @@ Weblate component's scope. See `CONTRIBUTING.md` for the contributor-facing work
    call → broken image. **Fixed**: the URL is now resolved through `url()` before being used, and
    an explicit check was added around this. See `CHANGELOG.md` for the release it landed in.
 
-## Live status (at time of writing)
+## Live status
 
-Version 1.0.5 is live on the official Grav GPM. See `CHANGELOG.md` for the current released
-version and `README.md` for user-facing configuration docs. This file describes architecture and
-rationale, not release status — please keep it in sync when the design changes, but don't
-duplicate version numbers here.
+See `CHANGELOG.md` for the current released version and `README.md` for user-facing
+configuration docs. This file describes architecture and rationale, not release status — please
+keep it in sync when the design changes, but don't duplicate version numbers here.
 
 ---
 
 ## Auf Deutsch (Kurzfassung)
 
 Diese Datei richtet sich an Contributor, die am Code arbeiten wollen (Endnutzer-Doku steht in
-`README.md`). Kernpunkte: keine externen Composer-Abhängigkeiten, GPM-fähig ohne Nutzereingriff,
-bedienbar ohne Twig-Kenntnisse. Zwei Einbindungswege (`{{ feed_teasers() }}` und
-`[feedteasers]`-Shortcode) nutzen dieselbe Rendering-Logik — bei Änderungen an einem Weg prüfen,
-ob der andere ebenfalls betroffen ist.
+`README.md`). Kernpunkte: keine externen Composer-Abhängigkeiten, PHP-Mindestversion 8.0 (siehe
+`composer.json`), GPM-fähig ohne Nutzereingriff, bedienbar ohne Twig-Kenntnisse. Zwei
+Einbindungswege (`{{ feed_teasers() }}` und `[feedteasers]`-Shortcode) nutzen dieselbe
+Rendering-Logik — bei Änderungen an einem Weg prüfen, ob der andere ebenfalls betroffen ist.
 
 Die Bildermittlung in `FeedParser.php` folgt einer festen Reihenfolge (`<enclosure>` →
 Media-RSS-Namespace → erstes `<img>` im HTML → konfiguriertes Fallback-Bild), Atom-Links brauchen

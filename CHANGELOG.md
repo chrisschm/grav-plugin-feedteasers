@@ -1,3 +1,11 @@
+# v1.0.9
+## unreleased
+
+1. [](#improved)
+    * Release tags are now bare semantic versions (`1.0.8`) instead of `v
+	-prefixed, matching Grav's GPM convention for version sorting and
+	`releases/latest`
+
 # v1.0.8
 ## 08/09/2026
 
