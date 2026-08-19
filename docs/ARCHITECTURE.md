@@ -1,8 +1,10 @@
 # Architecture
 
 This document explains how the plugin is built and *why* certain decisions were made. It's aimed
-at contributors who want to change code, not at end users configuring the plugin (see `README.md`
-for that). *(Eine deutsche Kurzfassung findest du am Ende dieser Datei.)*
+at contributors who want to change code, not at end users configuring the plugin (see the
+[Wiki](https://codeberg.org/chschmidt/grav-plugin-feedteasers/wiki) for that). See
+[`README.md`](README.md) for the rest of the contributor documentation index.
+*(Eine deutsche Kurzfassung findest du am Ende dieser Datei.)*
 
 ## Purpose
 
@@ -138,16 +140,18 @@ Weblate component's scope. See `CONTRIBUTING.md` for the contributor-facing work
 
 ## Live status
 
-See `CHANGELOG.md` for the current released version and `README.md` for user-facing
-configuration docs. This file describes architecture and rationale, not release status — please
-keep it in sync when the design changes, but don't duplicate version numbers here.
+See `CHANGELOG.md` for the current released version and the
+[Wiki](https://codeberg.org/chschmidt/grav-plugin-feedteasers/wiki) for user-facing configuration
+docs. This file describes architecture and rationale, not release status — please keep it in sync
+when the design changes, but don't duplicate version numbers here.
 
 ---
 
 ## Auf Deutsch (Kurzfassung)
 
-Diese Datei richtet sich an Contributor, die am Code arbeiten wollen (Endnutzer-Doku steht in
-`README.md`). Kernpunkte: keine externen Composer-Abhängigkeiten, PHP-Mindestversion 8.0 (siehe
+Diese Datei richtet sich an Contributor, die am Code arbeiten wollen (Endnutzer-Doku steht im
+[Wiki](https://codeberg.org/chschmidt/grav-plugin-feedteasers/wiki), weitere Contributor-Doku bei
+[`README.md`](README.md)). Kernpunkte: keine externen Composer-Abhängigkeiten, PHP-Mindestversion 8.0 (siehe
 `composer.json`), GPM-fähig ohne Nutzereingriff, bedienbar ohne Twig-Kenntnisse. Zwei
 Einbindungswege (`{{ feed_teasers() }}` und `[feedteasers]`-Shortcode) nutzen dieselbe
 Rendering-Logik — bei Änderungen an einem Weg prüfen, ob der andere ebenfalls betroffen ist.

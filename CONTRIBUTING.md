@@ -55,7 +55,30 @@ directly.
 - The top-level `name`/`description` fields in `blueprints.yaml` are intentionally **not** part
   of this translation setup (see `docs/ARCHITECTURE.md` for why) and stay as plain German text.
 
-[![Translation status](https://translate.codeberg.org/widget/grav-plugin-feedteasers/svg-badge.svg)](https://translate.codeberg.org/engage/grav-plugin-feedteasers/)
+### Maintainers: the `translate` branch
+
+Codeberg Translate is attached to a dedicated `translate` branch as its **repository branch**
+(not merely its push branch) — this distinction matters: changing only the push-branch setting
+would still leave Weblate's pull requests targeting `main`. Automatically generated Weblate
+commits/PRs (e.g. when a new, initially empty language file is created for a requesting
+translator) therefore land exclusively on `translate` and never touch `main` directly. They can
+be left there indefinitely or closed without any risk to `main`.
+
+This makes manual, file-based sync in both directions necessary. A periodic `git merge` between
+`main` and `translate` was deliberately rejected (permanent divergence, cherry-picking too
+costly):
+
+- **`main` → `translate`:** whenever `languages/en.yaml` or `languages/de.yaml` changes on `main`
+  (new strings, renamed keys), copy the file(s) over to `translate`, commit, and push — otherwise
+  translators end up working against a stale source.
+- **`translate` → `main`:** only sufficiently complete/correct language files are brought over
+  individually (not the branch as a whole), by copying the file, committing, and pushing.
+  **Before copying:** trigger *"Commit pending changes"* in Codeberg Translate's repository
+  maintenance (and wait/refresh briefly) — otherwise the most recent translations already saved
+  in the browser but not yet turned into a Git commit by Weblate would be missed.
+
+The `translate` branch is intentionally never merged back into `main` as a whole via
+`git merge`/pull request and diverges permanently.
 
 ## Configuration & code overview
 
@@ -68,7 +91,9 @@ directly.
   core plugins)
 - `templates/partials/feedteasers.html.twig` — output template
 
-See the plugin's own documentation/README for the full list of configuration options.
+See [`docs/README.md`](docs/README.md) for the full contributor documentation index (architecture,
+design decisions, security policy, code of conduct). For the end-user configuration reference, see
+the [Wiki](https://codeberg.org/chschmidt/grav-plugin-feedteasers/wiki).
 
 ## Release process (for context, maintainer-only)
 
@@ -96,6 +121,15 @@ Pull Requests dort einreichen.
 nicht kümmern, die Maintainer übernehmen fertige Sprachdateien manuell nach `main`. Neue (noch nicht
 vorhandene) Textbausteine müssen zuerst per regulärem Code-PR in `languages/en.yaml` (Basissprache)
 landen, bevor sie in Weblate zur Übersetzung erscheinen.
+
+**`translate`-Branch (nur für Maintainer):** Codeberg Translate ist als *Repository-Branch* (nicht
+nur als Push-Branch) an `translate` angebunden, nicht an `main` — automatisch erzeugte
+Weblate-Commits/PRs landen daher ausschließlich dort. Der Sync in beide Richtungen erfolgt bewusst
+manuell/dateibasiert statt per `git merge`: Änderungen an `languages/en.yaml`/`de.yaml` auf `main`
+müssen von Hand nach `translate` nachgezogen werden; umgekehrt werden nur fertige Sprachdateien
+einzeln übernommen — vorher in Codeberg Translate „Commit pending changes“ auslösen, sonst fehlen
+zuletzt im Browser gespeicherte, aber noch nicht committete Übersetzungen. Der Branch wird nie als
+Ganzes zurückgemerged.
 
 **Design-Ziele:** GPM-fähig ohne manuellen Eingriff, keine externen Composer-Abhängigkeiten (nur
 eingebaute PHP-Erweiterungen), bedienbar auch ohne Twig-Kenntnisse (`[feedteasers]`-Shortcode). Bei

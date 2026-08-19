@@ -2,144 +2,89 @@
 
 [![Translation status](https://translate.codeberg.org/widget/grav-plugin-feedteasers/svg-badge.svg)](https://translate.codeberg.org/engage/grav-plugin-feedteasers/)
 
-Zeigt Beiträge aus externen RSS- oder Atom-Feeds als klickbare Teaser-Kacheln
-an (Mini-Teaserbild, Titel, Textanriss). Bei mehreren konfigurierten Feeds
-kann optional per Tab-Reiter zwischen ihnen umgeschaltet werden. Ein Klick
-auf eine Kachel öffnet den Originalartikel in einem neuen Browser-Tab.
+**Feed Teasers** displays posts from external RSS or Atom feeds as clickable teaser cards
+(thumbnail, title, text excerpt) on a [Grav CMS](https://getgrav.org) site. When multiple feeds
+are configured, an optional tab switcher lets visitors switch between them. Clicking a card opens
+the original article in a new browser tab.
 
-Das Plugin kommt **ohne externe PHP-Abhängigkeiten** aus – RSS/Atom-Parsing
-läuft komplett über in PHP eingebaute Funktionen (`SimpleXMLElement`, `cURL`
-bzw. Stream-Kontext als Fallback).
+The plugin has **no external PHP dependencies** — RSS/Atom parsing relies entirely on PHP's
+built-in functions (`SimpleXMLElement`, `cURL` with a stream-context fallback).
 
 ## Installation
-
-### GPM (empfohlen)
 
 ```
 bin/gpm install feedteasers
 ```
 
-### Manuell / per Zip
+No further steps (no `composer install`, no external libraries) are required. For manual/zip
+installation, see the [Wiki](https://codeberg.org/chschmidt/grav-plugin-feedteasers/wiki).
 
-1. Diesen Ordner nach `user/plugins/feedteasers` kopieren.
-2. Grav-Cache leeren: `bin/grav clear-cache`.
-3. Plugin im Admin-Panel unter *Plugins* aktivieren (ist standardmäßig aktiv).
+## Quick usage
 
-Es sind **keine weiteren Schritte** (kein `composer install`, keine externen
-Bibliotheken) notwendig.
-
-## Konfiguration
-
-Im Admin-Panel unter *Plugins → Feed Teasers*:
-
-- **Feeds**: Liste aus Name + Feed-URL (RSS 2.0 oder Atom 1.0).
-- **Cache-Dauer**: wie lange ein Feed zwischengespeichert wird, bevor er neu
-  geladen wird.
-- **Mindestbreite einer Kachel**: CSS-Wert (z.B. `260px`, `18rem`). Bestimmt
-  indirekt, wie viele Kacheln pro Zeile nebeneinander passen, bevor umgebrochen
-  wird. Ungültige Werte werden ignoriert und durch `260px` ersetzt.
-- **Beiträge pro Feed / Textlänge / Tabs / Fallback-Bild / Timeout**: siehe
-  Formular-Beschreibungen.
-
-> **Hinweis zur Textlänge:** Der Textanriss wird zusätzlich zur Zeichenzahl
-> per CSS auf 3 Zeilen begrenzt (`-webkit-line-clamp`). Bei schmalen Kacheln
-> wird der Text also unter Umständen schon durch die Zeilenbegrenzung gekappt,
-> bevor die konfigurierte Zeichenzahl überhaupt erreicht wird. Wer mehr Text
-> sehen möchte, sollte zuerst die Kachelbreite erhöhen oder die
-> Zeilenbegrenzung in `assets/feedteasers.css` anpassen.
-
-## Verwendung
-
-### Auf einer Seite (Markdown-Editor, kein Code-Wissen nötig)
-
-Einfach in den Seiteninhalt schreiben:
+On a page, in the Markdown editor (no code knowledge needed):
 
 ```
 [feedteasers]
 ```
 
-Optional mit Parametern für genau diesen Aufruf:
-
-```
-[feedteasers show_tabs=false items_per_feed=3]
-```
-
-Das funktioniert ohne jede weitere Einstellung, insbesondere ohne die
-"Process Twig"-Option auf der Seite zu aktivieren.
-
-### In einer Theme-Template-Datei
-
-Als Twig-Funktion, z.B. in `sidebar.html.twig` oder `base.html.twig`:
+In a theme template, as a Twig function:
 
 ```twig
 {{ feed_teasers() }}
 ```
 
-Optional mit Überschreibungen für diesen einen Aufruf:
+Both accept optional parameters to override the configured defaults for that one call, e.g.
+`[feedteasers show_tabs=false items_per_feed=3]` or
+`{{ feed_teasers({'show_tabs': false, 'items_per_feed': 3}) }}`.
 
-```twig
-{{ feed_teasers({'show_tabs': false, 'items_per_feed': 3}) }}
-```
+## Documentation
 
-## Bildermittlung
+- **For site administrators:** the
+  [Wiki](https://codeberg.org/chschmidt/grav-plugin-feedteasers/wiki) is the full manual —
+  installation, all configuration options, embedding/parameters, image resolution, and
+  troubleshooting/FAQ.
+- **For developers and contributors:** start at [`docs/README.md`](docs/README.md) — architecture,
+  design decisions, and how to contribute.
 
-Für das Teaserbild wird in dieser Reihenfolge geprüft:
+## Links
 
-1. `<enclosure>`-Tag (RSS) mit `type="image/..."`.
-2. `media:thumbnail` / `media:content` (Media-RSS-Namespace).
-3. Erstes `<img>`-Tag im HTML-Inhalt des Beitrags.
-4. Konfiguriertes Fallback-Bild, falls gesetzt (Standard: das mitgelieferte
-   `images/fallback.png`, aufgelöst über den `plugin://`-Stream). Leeres Feld
-   im Admin-Panel = kein Fallback-Bild, die Kachel bleibt dann ohne Bildbereich.
+- Report a bug or request a feature:
+  [issue tracker](https://codeberg.org/chschmidt/grav-plugin-feedteasers/issues)
+- [Security policy](SECURITY.md)
+- [Contributing guide](CONTRIBUTING.md)
+- [Code of Conduct](CODE_OF_CONDUCT.md)
+- [Changelog](CHANGELOG.md)
+- Live demo: [jcs-net.de](https://www.jcs-net.de)
 
-## Fehlerverhalten
-
-Ein einzelner nicht erreichbarer oder fehlerhafter Feed führt nicht zum
-Abbruch der gesamten Ausgabe – er wird übersprungen und der Fehler ins
-Grav-Log geschrieben.
-
-### Fehler melden
-
-Fehler können über den [Bugtracker auf Codeberg](https://codeberg.org/chschmidt/grav-plugin-feedteasers/issues) zurückgemeldet werden.
-
-## Übersetzung
-
-Das Admin-Panel kann über [Codeberg Translate](https://translate.codeberg.org/engage/grav-plugin-feedteasers/)
-in weitere Sprachen übersetzt werden – direkt im Browser, ohne Git- oder Code-Kenntnisse.
-Aktuell verfügbar: Deutsch und Englisch.
-
-### Für Maintainer: der `translate`-Branch
-
-Codeberg Translate ist als Repository-Branch **nicht** an `main`, sondern an einen eigenen
-Branch `translate` angebunden. Damit landen automatisch erzeugte Commits/Pull-Requests von
-Weblate (z.B. beim Anlegen einer neuen, zunächst leeren Sprachdatei durch eine anfragende
-Person) ausschließlich dort und nie direkt gegen `main`. Sie können dort folgenlos liegen
-bleiben oder geschlossen werden.
-
-Daraus folgt zweierlei, das bewusst manuell gehandhabt wird (kein automatischer Merge):
-
-- **`main` → `translate`:** Ändert sich `languages/en.yaml` oder `languages/de.yaml` in `main`
-  (neue Textbausteine, umbenannte Keys), muss das manuell nach `translate` nachgezogen werden
-  (Datei kopieren, committen, pushen) – sonst übersetzen Personen irgendwann gegen einen
-  veralteten Stand der Quelltexte.
-- **`translate` → `main`:** Nur vollständig/ausreichend übersetzte Sprachdateien werden bei
-  Bedarf einzeln von `translate` nach `main` übernommen (Datei kopieren, committen, pushen),
-  nicht der Branch als Ganzes. **Wichtig vorher:** In Codeberg Translate unter
-  *Repository-Wartung* → *„Commit pending changes“* auslösen (und kurz warten/aktualisieren),
-  bevor die Datei kopiert wird – sonst fehlen ggf. die letzten, im Browser bereits gespeicherten
-  Übersetzungen, die von Weblate noch nicht in einen Git-Commit übernommen wurden.
-
-Der `translate`-Branch wird absichtlich nie per `git merge`/Pull-Request als Ganzes nach `main`
-zusammengeführt und divergiert dauerhaft.
-
-## Demo
-
-Eine aktive Installation kann auf der Startseite auf [JCS-Net.de](https://www.jcs-net.de) betrachtet werden.
-
-## Dokumentation
-
-Eine Dokumentation befindet sich im Aufbau: [Wiki](https://codeberg.org/chschmidt/grav-plugin-feedteasers/wiki)
-
-## Lizenz
+## License
 
 MIT
+
+---
+
+## Auf Deutsch (Kurzfassung)
+
+**Feed Teasers** zeigt Beiträge aus externen RSS-/Atom-Feeds als klickbare Teaser-Kacheln (Bild,
+Titel, Textanriss) an; bei mehreren konfigurierten Feeds kann optional per Tab-Reiter zwischen
+ihnen umgeschaltet werden. Ein Klick auf eine Kachel öffnet den Originalartikel in einem neuen
+Browser-Tab. Das Plugin kommt **ohne externe PHP-Abhängigkeiten** aus.
+
+**Installation:** `bin/gpm install feedteasers` (empfohlen), alternativ manuell/per Zip — siehe
+[Wiki](https://codeberg.org/chschmidt/grav-plugin-feedteasers/wiki).
+
+**Verwendung:** `[feedteasers]` im Seiteninhalt (kein Twig-Wissen nötig) oder
+`{{ feed_teasers() }}` im Template, jeweils mit optionalen Parametern zum Überschreiben der
+Standardwerte.
+
+**Dokumentation:** Ein vollständiges Anwender-Handbuch (Installation, alle
+Konfigurationsoptionen, Einbindung, Fehlerbehebung/FAQ) gibt es im
+[Wiki](https://codeberg.org/chschmidt/grav-plugin-feedteasers/wiki). Entwickler-/
+Contributor-Doku beginnt bei [`docs/README.md`](docs/README.md).
+
+**Weitere Links:**
+[Fehler melden](https://codeberg.org/chschmidt/grav-plugin-feedteasers/issues),
+[Sicherheitsrichtlinie](SECURITY.md), [Mitwirken](CONTRIBUTING.md),
+[Verhaltenskodex](CODE_OF_CONDUCT.md), [Changelog](CHANGELOG.md). Demo:
+[jcs-net.de](https://www.jcs-net.de).
+
+**Lizenz:** MIT.
