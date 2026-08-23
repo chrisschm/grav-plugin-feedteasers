@@ -13,7 +13,44 @@
             <termEntry>
                 <langSet xml:lang="en"><tig><term>SSRF</term></tig></langSet>
                 <langSet xml:lang="de"><tig><term></term></tig></langSet>
+                <note from="translator">Technischer Begriff: Server-Side Request Forgery. In allen Sprachen als "SSRF" behalten – nicht übersetzen. Bezieht sich auf den eingebauten Schutz des Plugins gegen Anfragen an interne/private Netzwerkadressen, der im SSRF_ALLOWED_HOSTS_HINT Hilfetext erklärt wird.</note>
                 <descrip>Technical term: Server-Side Request Forgery. Keep as "SSRF" in all languages — do not translate. Refers to the plugin's built-in protection against requests to internal/private network addresses, explained in the SSRF_ALLOWED_HOSTS_HINT help text.</descrip>
+            </termEntry>
+            <termEntry>
+                <langSet xml:lang="en"><tig><term>Grav</term></tig></langSet>
+                <langSet xml:lang="de"><tig><term></term></tig></langSet>
+                <note from="translator">Grav wird als Name des übergeordneten Content Management Systems nicht übersetzt.</note>
+                <descrip>Name: Grav is not translated as the name of the parent content management system.</descrip>
+            </termEntry>
+            <termEntry>
+                <langSet xml:lang="en"><tig><term>plugin://feedteasers/images/fallback.png</term></tig></langSet>
+                <langSet xml:lang="de"><tig><term></term></tig></langSet>
+                <descrip>Path: File paths are not translated.</descrip>
+            </termEntry>
+            <termEntry>
+                <langSet xml:lang="en"><tig><term>user/config/plugins/feedteasers.yaml</term></tig></langSet>
+                <langSet xml:lang="de"><tig><term></term></tig></langSet>
+                <descrip>Path: File paths are not translated.</descrip>
+            </termEntry>
+            <termEntry>
+                <langSet xml:lang="en"><tig><term>theme://images/my-image.jpg</term></tig></langSet>
+                <langSet xml:lang="de"><tig><term></term></tig></langSet>
+                <descrip>Path: File paths are not translated.</descrip>
+            </termEntry>
+            <termEntry>
+                <langSet xml:lang="en"><tig><term>CSS</term></tig></langSet>
+                <langSet xml:lang="de"><tig><term></term></tig></langSet>
+                <descrip>Technical term: Cascading Style Sheets. Keep as "CSS" in all languages — do not translate.</descrip>
+            </termEntry>
+            <termEntry>
+                <langSet xml:lang="en"><tig><term>URL</term></tig></langSet>
+                <langSet xml:lang="de"><tig><term></term></tig></langSet>
+                <descrip>Technical term: Uniform Resource Locator. Keep as "URL" in all languages — do not translate.</descrip>
+            </termEntry>
+            <termEntry>
+                <langSet xml:lang="en"><tig><term>HTTP</term></tig></langSet>
+                <langSet xml:lang="de"><tig><term></term></tig></langSet>
+                <descrip>Technical term: Hypertext Transfer Protocol. Keep as "HTTP" in all languages — do not translate.</descrip>
             </termEntry>
         </body>
     </text>
