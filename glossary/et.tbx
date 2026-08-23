@@ -30,6 +30,11 @@
                 <langSet xml:lang="et"><tig><term></term></tig></langSet>
                 <descrip>Path: File paths are not translated.</descrip>
             </termEntry>
+            <termEntry>
+                <langSet xml:lang="en"><tig><term>theme://images/my-image.jpg</term></tig></langSet>
+                <langSet xml:lang="et"><tig><term></term></tig></langSet>
+                <descrip>Path: File paths are not translated.</descrip>
+            </termEntry>
         </body>
     </text>
 </martif>
