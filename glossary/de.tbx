@@ -37,6 +37,20 @@
                 <langSet xml:lang="de"><tig><term></term></tig></langSet>
                 <descrip>Path: File paths are not translated.</descrip>
             </termEntry>
+            <termEntry>
+                <langSet xml:lang="en"><tig><term>CSS</term></tig></langSet>
+                <langSet xml:lang="de"><tig><term></term></tig></langSet>
+                <descrip>Technical term: Cascading Style Sheets. Keep as "CSS" in all languages — do not translate.</descrip>
+            </termEntry>
+            <termEntry>
+                <langSet xml:lang="en"><tig><term>URL</term></tig></langSet>
+                <langSet xml:lang="de"><tig><term></term></tig></langSet>
+                <descrip>Technical term: Uniform Resource Locator. Keep as "URL" in all languages — do not translate.</descrip>
+            </termEntry>
+            <termEntry id="HTTP">
+                <langSet xml:lang="en"><tig><term>Technical term: Hypertext Transfer Protocol. Keep as "HTTP" in all languages — do not translate.</term></tig></langSet>
+                <langSet xml:lang="de"><tig><term></term></tig></langSet>
+            </termEntry>
         </body>
     </text>
 </martif>
