@@ -21,11 +21,6 @@
                 <descrip>Name: Grav is not translated as the name of the parent content management system.</descrip>
             </termEntry>
             <termEntry>
-                <langSet xml:lang="en"><tig><term>theme://images/eigenes-bild.jpg</term></tig></langSet>
-                <langSet xml:lang="et"><tig><term></term></tig></langSet>
-                <descrip>Path: File paths are not translated.</descrip>
-            </termEntry>
-            <termEntry>
                 <langSet xml:lang="en"><tig><term>plugin://feedteasers/images/fallback.png</term></tig></langSet>
                 <langSet xml:lang="et"><tig><term></term></tig></langSet>
                 <descrip>Path: File paths are not translated.</descrip>
