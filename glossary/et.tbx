@@ -15,6 +15,26 @@
                 <langSet xml:lang="et"><tig><term></term></tig></langSet>
                 <descrip>Technical term: Server-Side Request Forgery. Keep as "SSRF" in all languages — do not translate. Refers to the plugin's built-in protection against requests to internal/private network addresses, explained in the SSRF_ALLOWED_HOSTS_HINT help text.</descrip>
             </termEntry>
+            <termEntry>
+                <langSet xml:lang="en"><tig><term>Grav</term></tig></langSet>
+                <langSet xml:lang="et"><tig><term></term></tig></langSet>
+                <descrip>Name: Grav is not translated as the name of the parent content management system.</descrip>
+            </termEntry>
+            <termEntry>
+                <langSet xml:lang="en"><tig><term>theme://images/eigenes-bild.jpg</term></tig></langSet>
+                <langSet xml:lang="et"><tig><term></term></tig></langSet>
+                <descrip>Path: File paths are not translated.</descrip>
+            </termEntry>
+            <termEntry>
+                <langSet xml:lang="en"><tig><term>plugin://feedteasers/images/fallback.png</term></tig></langSet>
+                <langSet xml:lang="et"><tig><term></term></tig></langSet>
+                <descrip>Path: File paths are not translated.</descrip>
+            </termEntry>
+            <termEntry>
+                <langSet xml:lang="en"><tig><term>user/config/plugins/feedteasers.yaml</term></tig></langSet>
+                <langSet xml:lang="et"><tig><term></term></tig></langSet>
+                <descrip>Path: File paths are not translated.</descrip>
+            </termEntry>
         </body>
     </text>
 </martif>
