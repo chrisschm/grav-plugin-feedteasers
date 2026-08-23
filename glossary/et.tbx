@@ -45,10 +45,6 @@
                 <langSet xml:lang="et"><tig><term></term></tig></langSet>
                 <descrip>Technical term: Uniform Resource Locator. Keep as "URL" in all languages — do not translate.</descrip>
             </termEntry>
-            <termEntry id="HTTP">
-                <langSet xml:lang="en"><tig><term>Technical term: Hypertext Transfer Protocol. Keep as "HTTP" in all languages — do not translate.</term></tig></langSet>
-                <langSet xml:lang="et"><tig><term></term></tig></langSet>
-            </termEntry>
         </body>
     </text>
 </martif>
