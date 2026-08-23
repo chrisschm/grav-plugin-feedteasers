@@ -13,13 +13,11 @@
             <termEntry>
                 <langSet xml:lang="en"><tig><term>SSRF</term></tig></langSet>
                 <langSet xml:lang="de"><tig><term></term></tig></langSet>
-                <note from="translator">Technischer Begriff: Server-Side Request Forgery. In allen Sprachen als "SSRF" behalten – nicht übersetzen. Bezieht sich auf den eingebauten Schutz des Plugins gegen Anfragen an interne/private Netzwerkadressen, der im SSRF_ALLOWED_HOSTS_HINT Hilfetext erklärt wird.</note>
                 <descrip>Technical term: Server-Side Request Forgery. Keep as "SSRF" in all languages — do not translate. Refers to the plugin's built-in protection against requests to internal/private network addresses, explained in the SSRF_ALLOWED_HOSTS_HINT help text.</descrip>
             </termEntry>
             <termEntry>
                 <langSet xml:lang="en"><tig><term>Grav</term></tig></langSet>
                 <langSet xml:lang="de"><tig><term></term></tig></langSet>
-                <note from="translator">Grav wird als Name des übergeordneten Content Management Systems nicht übersetzt.</note>
                 <descrip>Name: Grav is not translated as the name of the parent content management system.</descrip>
             </termEntry>
             <termEntry>
