@@ -10,6 +10,11 @@
     </martifHeader>
     <text>
         <body>
-            </body>
+            <termEntry>
+                <langSet xml:lang="en"><tig><term>SSRF</term></tig></langSet>
+                <langSet xml:lang="de"><tig><term></term></tig></langSet>
+                <descrip>Technical term: Server-Side Request Forgery. Keep as "SSRF" in all languages — do not translate. Refers to the plugin's built-in protection against requests to internal/private network addresses, explained in the SSRF_ALLOWED_HOSTS_HINT help text.</descrip>
+            </termEntry>
+        </body>
     </text>
 </martif>
