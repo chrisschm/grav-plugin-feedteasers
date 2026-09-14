@@ -1,5 +1,5 @@
 # v1.1.0
-## 09/14/2026
+## 09/14/2026 ([77cd747](https://codeberg.org/chschmidt/grav-plugin-feedteasers/commit/77cd7470c7ec767b0bc8960f3fbcbe72e3125851))
 
 1. [](#improved)
     * Release tags are now bare semantic versions (`1.0.8`) instead of `v
