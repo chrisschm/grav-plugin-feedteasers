@@ -28,3 +28,4 @@ PLUGIN_FEEDTEASERS:
   FEEDS: 'Feeds'
   FEED_NAME: 'Anzeigename'
   FEED_URL: 'Feed-URL (RSS oder Atom)'
+  NO_ITEMS_AVAILABLE: 'Aktuell keine Beiträge verfügbar.'

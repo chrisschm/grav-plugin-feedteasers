@@ -26,6 +26,7 @@ PLUGIN_FEEDTEASERS:
     **Hoiatus:** kõik siin loetletud hostid muutuvad serverist kättesaadavaks, isegi kui need asuvad
     sisevõrgus, seega lisa ainult neid hoste, mida usaldad.
   IMAGE_FALLBACK: Peibutuspildi tagavaravariant
-  IMAGE_FALLBACK_HELP: Asukoht serveris, absoluutne võrguaadress või Gravi 
-    sisuvoog (nt. plugin://feedteasers/images/fallback.png, 
+  IMAGE_FALLBACK_HELP: Asukoht serveris, absoluutne võrguaadress või Gravi
+    sisuvoog (nt. plugin://feedteasers/images/fallback.png,
     theme://images/my-image.jpg). Kui jätad tühjaks, siis tagavarapilti pole.
+  NO_ITEMS_AVAILABLE: Hetkel ei ole ühtegi kirjet saadaval.

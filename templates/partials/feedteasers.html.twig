@@ -34,7 +34,7 @@
             {% endif %}
 
             {% if group.items is empty %}
-                <p class="feedteasers__empty">Aktuell keine Beiträge verfügbar.</p>
+                <p class="feedteasers__empty">{{ 'PLUGIN_FEEDTEASERS.NO_ITEMS_AVAILABLE'|t }}</p>
             {% else %}
                 <div class="feedteasers__grid">
                     {% for item in group.items %}

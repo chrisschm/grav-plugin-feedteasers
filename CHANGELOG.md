@@ -5,6 +5,14 @@
     * Release tags are now bare semantic versions (`1.0.8`) instead of `v
 	-prefixed, matching Grav's GPM convention for version sorting and
 	`releases/latest`
+    * All code comments, docblocks and internal log/exception messages
+      translated from German to English (workflow file, PHP classes,
+      `feedteasers.yaml`, `.gitignore`, `composer.json` /
+      `blueprints.yaml` description)
+1. [](#bugfix)
+    * The empty-feed message was hardcoded in German and bypassed the
+      language files; it now uses `PLUGIN_FEEDTEASERS.NO_ITEMS_AVAILABLE`
+      like all other UI text
 
 # v1.0.8
 ## 08/09/2026 ([d9818ac](https://codeberg.org/chschmidt/grav-plugin-feedteasers/commit/d9818aca40da24aa2fd83ce7ec185b20e12d7724))
