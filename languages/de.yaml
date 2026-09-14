@@ -4,7 +4,7 @@ PLUGIN_FEEDTEASERS:
   TAB_FEEDS: 'Feeds'
   CACHE_TIME: 'Cache-Dauer (Sekunden)'
   ITEMS_PER_FEED: 'Beiträge pro Feed'
-  TEASER_LENGTH: 'Länge des Textanrisses (Zeichen)'
+  TEASER_LENGTH: 'Länge des Teasers (Zeichen)'
   CARD_MIN_WIDTH: 'Mindestbreite einer Kachel (CSS-Wert, z.B. 260px)'
   CARD_MIN_WIDTH_HELP: 'Bestimmt indirekt, wie viele Kacheln pro Zeile passen. Kleinerer
     Wert = mehr Kacheln nebeneinander.'
