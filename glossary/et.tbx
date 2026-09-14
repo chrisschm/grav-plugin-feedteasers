@@ -27,7 +27,7 @@
             </termEntry>
             <termEntry>
                 <langSet xml:lang="en"><tig><term>user/config/plugins/feedteasers.yaml</term></tig></langSet>
-                <langSet xml:lang="et"><tig><term>user/config/plugins/feedteasers.yaml</term></tig></langSet>
+                <langSet xml:lang="et"><tig><term></term></tig></langSet>
                 <descrip>Path: File paths are not translated.</descrip>
             </termEntry>
             <termEntry>
