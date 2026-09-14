@@ -26,11 +26,6 @@
                 <descrip>Path: File paths are not translated.</descrip>
             </termEntry>
             <termEntry>
-                <langSet xml:lang="en"><tig><term>user/config/plugins/feedteasers.yaml</term></tig></langSet>
-                <langSet xml:lang="et"><tig><term></term></tig></langSet>
-                <descrip>Path: File paths are not translated.</descrip>
-            </termEntry>
-            <termEntry>
                 <langSet xml:lang="en"><tig><term>theme://images/my-image.jpg</term></tig></langSet>
                 <langSet xml:lang="et"><tig><term></term></tig></langSet>
                 <descrip>Path: File paths are not translated.</descrip>
@@ -52,22 +47,22 @@
             </termEntry>
             <termEntry>
                 <langSet xml:lang="en"><tig><term>Feed</term></tig></langSet>
-                <langSet xml:lang="et"><tig><term>Valdkonnatermin: RSS- või Atom-voog – väline, perioodiliselt uuenev sisuallikas, millest plugin hangib lühitutvustusi. Tõlgi järjepidevalt: saksa keeles kasutatakse väljakujunenud laensõna „Feed“ (mitte tõlkida nt sõnaga „Kanal“); eesti keeles kasutatakse terminit „uudisvoog“. Kehtib kõikjal, kus esineb sõna „feed“ (TAB_FEEDS, FEEDS, FEED_URL, ITEMS_PER_FEED, SHOW_TABS).</term></tig></langSet>
+                <langSet xml:lang="et"><tig><term>Uudisvoog</term></tig></langSet>
                 <descrip>Domain term: an RSS or Atom feed — the external, periodically updated content source the plugin fetches teasers from. Translate consistently: German keeps the established loanword "Feed" (do not translate as e.g. "Kanal"); Estonian uses "uudisvoog". Applies wherever "feed" appears (TAB_FEEDS, FEEDS, FEED_URL, ITEMS_PER_FEED, SHOW_TABS).</descrip>
             </termEntry>
             <termEntry>
                 <langSet xml:lang="en"><tig><term>Cache</term></tig></langSet>
-                <langSet xml:lang="et"><tig><term>Valdkonnatermin: pistikprogrammi sisemine puhver, mis salvestab hangitud voo andmed määratavaks ajavahemikuks (CACHE_TIME), et vältida nende uuesti hankimist iga lehe laadimise korral. Tõlgi järjepidevalt: saksa keeles kasutatakse väljakujunenud laensõna „Cache“ (nt „Cache-Dauer“), eesti keeles aga terminit „puhverdamine“ (nt „puhverdamise kestus“).</term></tig></langSet>
+                <langSet xml:lang="et"><tig><term>Puhverdamine</term></tig></langSet>
                 <descrip>Domain term: the plugin's internal cache that stores fetched feed data for a configurable duration (CACHE_TIME) to avoid re-fetching on every page load. Translate consistently: German keeps the established loanword "Cache" (e.g. "Cache-Dauer"); Estonian translates as "puhverdamine" (e.g. "Puhverdamise kestus").</descrip>
             </termEntry>
             <termEntry>
                 <langSet xml:lang="en"><tig><term>Fallback</term></tig></langSet>
-                <langSet xml:lang="et"><tig><term>Domain term: the image shown instead of a feed item's own image when none is available (IMAGE_FALLBACK). Translate consistently: German keeps the established loanword "Fallback" (e.g. "Fallback-Teaserbild"); Estonian translates as "tagavaravariant" (e.g. "Peibutuspildi tagavaravariant").</term></tig></langSet>
+                <langSet xml:lang="et"><tig><term>Tagavaravariant</term></tig></langSet>
                 <descrip>Domain term: the image shown instead of a feed item's own image when none is available (IMAGE_FALLBACK). Translate consistently: German keeps the established loanword "Fallback" (e.g. "Fallback-Teaserbild"); Estonian translates as "tagavaravariant" (e.g. "Peibutuspildi tagavaravariant").</descrip>
             </termEntry>
             <termEntry>
                 <langSet xml:lang="en"><tig><term>Teaser</term></tig></langSet>
-                <langSet xml:lang="et"><tig><term>Valdkonnaspetsiifiline termin: klõpsatav eelvaatekaart, mille plugin iga vooüksuse jaoks genereerib (lühike väljavõte ja valikuline pilt). Saksa keeles kasutatakse järjepidevalt laensõna *Teaser* (nt *Länge des Teasers*, *Fallback-Teaserbild*) – seda ei tõlgita kui *Textanriss*. Eesti keeles kasutatakse olenevalt kontekstist kahte erinevat sõna: väljavõtte puhul „sissejuhatav tekst“ ja pildi puhul „peibutuspilt“ – tegemist on teadliku teksti ja pildi eristamisega, mitte terminoloogilise ebakõlaga.</term></tig></langSet>
+                <langSet xml:lang="et"><tig><term>Sissejuhatav tekst</term></tig></langSet>
                 <descrip>Domain term: the clickable preview card the plugin renders for each feed item (short excerpt text plus optional image). German keeps the established loanword "Teaser" consistently (e.g. "Länge des Teasers", "Fallback-Teaserbild") — do not translate as "Textanriss". Estonian uses two different words depending on context: "sissejuhatav tekst" for the excerpt text, "peibutuspilt" for the image — this is a deliberate text/image distinction, not drift.</descrip>
             </termEntry>
         </body>
