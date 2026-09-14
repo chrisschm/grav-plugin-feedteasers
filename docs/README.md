@@ -12,8 +12,8 @@ duplicates that.
   translation workflow (including the maintainer-only `translate`-branch mechanics), and the
   design constraints any change needs to respect.
 - [`ARCHITECTURE.md`](ARCHITECTURE.md) — how the plugin is built and why: file layout, the two
-  integration paths (`{{ feed_teasers() }}` vs. `[feedteasers]`), SSRF protection, Admin-panel
-  i18n, and notable past bugs.
+  integration paths (`{{ feed_teasers() }}` vs. `[feedteasers]`), SSRF protection, i18n (admin
+  panel and frontend), and notable past bugs.
 
 ## Policies
 

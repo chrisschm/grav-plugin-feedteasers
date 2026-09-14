@@ -52,8 +52,9 @@ directly.
 - The source/base language is `languages/en.yaml`. If you're adding a *new* translatable string
   (not just translating an existing one), it needs to be added there first as part of a regular
   code PR — only then does it show up in Weblate for translators to pick up.
-- The top-level `name`/`description` fields in `blueprints.yaml` are intentionally **not** part
-  of this translation setup (see `docs/ARCHITECTURE.md` for why) and stay as plain German text.
+- The top-level `name`/`description` fields in `blueprints.yaml`, and `composer.json`'s
+  `description`, are intentionally **not** part of this translation setup (see
+  `docs/ARCHITECTURE.md` for why) and stay as plain English text.
 
 ### Maintainers: the `translate` branch
 
@@ -68,9 +69,9 @@ This makes manual, file-based sync in both directions necessary. A periodic `git
 `main` and `translate` was deliberately rejected (permanent divergence, cherry-picking too
 costly):
 
-- **`main` → `translate`:** whenever `languages/en.yaml` or `languages/de.yaml` changes on `main`
-  (new strings, renamed keys), copy the file(s) over to `translate`, commit, and push — otherwise
-  translators end up working against a stale source.
+- **`main` → `translate`:** whenever any `languages/*.yaml` file (`en`, `de`, `et`, ...) changes on
+  `main` (new strings, renamed keys), copy the file(s) over to `translate`, commit, and push —
+  otherwise translators end up working against a stale source.
 - **`translate` → `main`:** only sufficiently complete/correct language files are brought over
   individually (not the branch as a whole), by copying the file, committing, and pushing.
   **Before copying:** trigger *"Commit pending changes"* in Codeberg Translate's repository
@@ -87,7 +88,7 @@ The `translate` branch is intentionally never merged back into `main` as a whole
   `cURL`/stream fallback, per-feed exception handling)
 - `blueprints.yaml` — Admin panel form (labels/help/titles are translatable via `PLUGIN_FEEDTEASERS.*`
   keys in `languages/*.yaml`; the top-level `name`/`description` are **not** auto-translated by
-  Admin/Admin Next, so they intentionally stay as plain German text, matching common practice for Grav
+  Admin/Admin Next, so they intentionally stay as plain English text, matching common practice for Grav
   core plugins)
 - `templates/partials/feedteasers.html.twig` — output template
 
@@ -125,9 +126,10 @@ landen, bevor sie in Weblate zur Übersetzung erscheinen.
 **`translate`-Branch (nur für Maintainer):** Codeberg Translate ist als *Repository-Branch* (nicht
 nur als Push-Branch) an `translate` angebunden, nicht an `main` — automatisch erzeugte
 Weblate-Commits/PRs landen daher ausschließlich dort. Der Sync in beide Richtungen erfolgt bewusst
-manuell/dateibasiert statt per `git merge`: Änderungen an `languages/en.yaml`/`de.yaml` auf `main`
-müssen von Hand nach `translate` nachgezogen werden; umgekehrt werden nur fertige Sprachdateien
-einzeln übernommen — vorher in Codeberg Translate „Commit pending changes“ auslösen, sonst fehlen
+manuell/dateibasiert statt per `git merge`: Änderungen an einer beliebigen `languages/*.yaml`-Datei
+(`en`, `de`, `et`, ...) auf `main` müssen von Hand nach `translate` nachgezogen werden; umgekehrt
+werden nur fertige Sprachdateien einzeln übernommen — vorher in Codeberg Translate „Commit pending
+changes“ auslösen, sonst fehlen
 zuletzt im Browser gespeicherte, aber noch nicht committete Übersetzungen. Der Branch wird nie als
 Ganzes zurückgemerged.
 

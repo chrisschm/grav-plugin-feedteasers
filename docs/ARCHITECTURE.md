@@ -32,7 +32,7 @@ user/plugins/feedteasers/
 ├── blueprints.yaml                       # Admin panel form
 ├── composer.json                         # metadata only, no third-party "require"
 ├── classes/FeedParser.php                # dependency-free RSS 2.0 / Atom 1.0 parser
-├── languages/{de,en}.yaml                # Admin panel translations
+├── languages/{de,en,et}.yaml             # UI translations (admin panel + frontend)
 ├── templates/partials/feedteasers.html.twig
 ├── assets/{feedteasers.css,feedteasers.js}
 └── images/fallback.png                   # generic placeholder image (188×188px)
@@ -67,7 +67,7 @@ the same fix.
 
 If you add a new configurable option, it needs an entry in `blueprints.yaml`, a default in
 `feedteasers.yaml`, and — if it's user-facing text — translation keys in `languages/*.yaml`
-(see "Admin panel translations" below).
+(see "Translations" below).
 
 ## Image resolution (`FeedParser.php`), fixed order
 
@@ -103,28 +103,28 @@ redirected (compromise, misconfiguration, or a deliberately malicious response) 
 address, which is what this guards against. Rare intentional exceptions (e.g. a self-hosted feed
 on an internal network) can be allow-listed via `ssrf_allowed_hosts` in `feedteasers.yaml`.
 
-## Admin panel translations
+## Translations
 
 Form labels, help texts, and tab titles in `blueprints.yaml` (`form.fields`) use
-`PLUGIN_FEEDTEASERS.*` language keys, resolved via `languages/{de,en}.yaml`. Yes/No options use
-Grav's built-in `PLUGIN_ADMIN.YES` / `.NO`.
+`PLUGIN_FEEDTEASERS.*` language keys, resolved via `languages/{de,en,et}.yaml`. Yes/No options use
+Grav's built-in `PLUGIN_ADMIN.YES` / `.NO`. The same language files also cover user-facing
+frontend output — e.g. the empty-state message in `templates/partials/feedteasers.html.twig`,
+resolved via the `|t` Twig filter (`{{ 'PLUGIN_FEEDTEASERS.NO_ITEMS_AVAILABLE'|t }}`) — not just
+strings reachable through `form.fields`.
 
-Important exception: the blueprint's top-level `name` and `description` (visible in the plugin
-overview and at the top of the configuration dialog) are **not** auto-translated by Admin/Admin
-Next, unlike `label`/`help`/`title` inside `form.fields`. `description:` therefore intentionally
-stays as plain German text in `blueprints.yaml`, matching common practice in Grav core plugins,
-rather than referencing a language key.
-
-Known gap: the frontend string "Aktuell keine Beiträge verfügbar." in
-`templates/partials/feedteasers.html.twig` is not yet translatable (frontend/user-facing scope,
-deliberately out of scope for the admin-i18n work so far).
+Exception: the blueprint's top-level `name` and `description` (visible in the plugin overview and
+at the top of the configuration dialog) are **not** auto-translated by Admin/Admin Next, unlike
+`label`/`help`/`title` inside `form.fields`, and are therefore plain text rather than a language
+key reference. Same for `composer.json`'s `description` (Packagist-style package metadata). Both
+are plain English text.
 
 **Translation contributions:** since these language files are simple key/value YAML, they're a
 good fit for community translation via [Codeberg Translate](https://translate.codeberg.org/engage/grav-plugin-feedteasers/)
-(hosted Weblate), configured with `languages/en.yaml` as the source language. This only covers the
-`PLUGIN_FEEDTEASERS.*` keys resolved through `form.fields` — it does **not** cover the
-non-translated top-level `name`/`description` described above, since those aren't part of the
-Weblate component's scope. See `CONTRIBUTING.md` for the contributor-facing workflow.
+(hosted Weblate), configured with `languages/en.yaml` as the source language. This covers every
+`PLUGIN_FEEDTEASERS.*` key in the language files — both the ones resolved through `form.fields`
+and the ones used directly in templates via `|t` — but **not** the non-translated top-level
+`name`/`description` fields described above, since those aren't part of the Weblate component's
+scope. See `CONTRIBUTING.md` for the contributor-facing workflow.
 
 ## Notable past bugs (useful context before touching related code)
 
@@ -137,6 +137,12 @@ Weblate component's scope. See `CONTRIBUTING.md` for the contributor-facing work
    v1.0.1. A `plugin://` stream string ends up verbatim in the `src` attribute without a `url()`
    call → broken image. **Fixed**: the URL is now resolved through `url()` before being used, and
    an explicit check was added around this. See `CHANGELOG.md` for the release it landed in.
+4. **Hardcoded, non-translatable frontend string** — the empty-state message in
+   `templates/partials/feedteasers.html.twig` was plain German text, bypassing the language files
+   entirely (unlike every other user-facing string). **Fixed**: now resolved via
+   `PLUGIN_FEEDTEASERS.NO_ITEMS_AVAILABLE` like the rest of the UI text. When adding new
+   user-facing strings anywhere (admin panel or frontend), always go through a language key —
+   don't hardcode text in a template or class.
 
 ## Live status
 
@@ -167,15 +173,20 @@ gegen private/reservierte Bereiche). Redirects werden deshalb manuell statt auto
 verfolgt, mit erneuter Prüfung pro Hop und IP-Pinning gegen DNS-Rebinding. Details siehe Abschnitt
 "SSRF protection" oben.
 
-Die oberste Ebene von `blueprints.yaml` (`name`/`description`) wird von Admin Next **nicht**
-automatisch übersetzt — bewusst als deutscher Klartext belassen, nur Felder innerhalb von
-`form.fields` nutzen Sprachschlüssel. Übersetzungen dieser Sprachschlüssel laufen über
+Die Sprachdateien (`languages/{de,en,et}.yaml`) decken sowohl Admin-Panel-Texte
+(`form.fields`-Labels/Hilfetexte) als auch Frontend-Ausgaben ab, z. B. die Leer-Status-Meldung im
+Twig-Template über den `|t`-Filter. Die oberste Ebene von `blueprints.yaml` (`name`/`description`)
+sowie `composer.json`s `description` werden von Admin Next **nicht** automatisch übersetzt und
+sind bewusst einfacher englischer Text statt eines Sprachschlüssels — nur Felder innerhalb von
+`form.fields` sowie im Frontend per `|t` referenzierte Keys nutzen Sprachschlüssel. Übersetzungen
+dieser Sprachschlüssel laufen über
 [Codeberg Translate](https://translate.codeberg.org/engage/grav-plugin-feedteasers/)
 (Basissprache: `languages/en.yaml`) — Details zum Contributor-Workflow stehen in
 `CONTRIBUTING.md`, nicht hier.
 
-Drei dokumentierte Altbugs (fehlendes `onTwigTemplatePaths`, `mergeConfig(null, true)`-TypeError,
-fehlendes `url()` um das Fallback-Bild) sind im Abschnitt "Notable past bugs" oben als Kontext
-festgehalten. Alle drei sind mittlerweile behoben, u. a. wurde beim Fallback-Bild inzwischen eine
-explizite URL-Prüfung ergänzt — bei Änderungen an verwandtem Code trotzdem `CHANGELOG.md`
-gegenprüfen, falls sich der Stand seither weiterentwickelt hat.
+Vier dokumentierte Altbugs (fehlendes `onTwigTemplatePaths`, `mergeConfig(null, true)`-TypeError,
+fehlendes `url()` um das Fallback-Bild, hartcodierter deutscher Leer-Status-Text im Frontend) sind
+im Abschnitt "Notable past bugs" oben als Kontext festgehalten. Alle vier sind mittlerweile
+behoben, u. a. wurde beim Fallback-Bild inzwischen eine explizite URL-Prüfung ergänzt — bei
+Änderungen an verwandtem Code trotzdem `CHANGELOG.md` gegenprüfen, falls sich der Stand seither
+weiterentwickelt hat.
