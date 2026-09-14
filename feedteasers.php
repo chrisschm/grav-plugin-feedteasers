@@ -36,10 +36,11 @@ class FeedteasersPlugin extends Plugin
     }
 
     /**
-     * Ersetzt [feedteasers] (optional mit Parametern, z.B.
-     * [feedteasers show_tabs=false items_per_feed=3]) im bereits aus
-     * Markdown gerenderten Seiteninhalt durch die fertige Teaser-Ausgabe.
-     * Dadurch muss die Seite selbst keine Twig-Verarbeitung aktiviert haben.
+     * Replaces [feedteasers] (optionally with parameters, e.g.
+     * [feedteasers show_tabs=false items_per_feed=3]) in page content
+     * already rendered from Markdown with the finished teaser output.
+     * This means the page itself doesn't need to have Twig processing
+     * enabled.
      */
     public function onPageContentProcessed(Event $event): void
     {
@@ -63,8 +64,8 @@ class FeedteasersPlugin extends Plugin
     }
 
     /**
-     * Parst einfache key="value" / key=value Paare aus dem Shortcode-Tag,
-     * z.B. 'show_tabs=false items_per_feed=3' -> ['show_tabs' => false, 'items_per_feed' => 3]
+     * Parses simple key="value" / key=value pairs from the shortcode tag,
+     * e.g. 'show_tabs=false items_per_feed=3' -> ['show_tabs' => false, 'items_per_feed' => 3]
      */
     private function parseShortcodeAttributes(string $attrString): array
     {
@@ -105,14 +106,14 @@ class FeedteasersPlugin extends Plugin
 
     public function onGetPageTemplates(Event $event): void
     {
-        // Platzhalter fuer zukuenftige eigene Seitentemplates, falls gewuenscht.
+        // Placeholder for future custom page templates, if desired.
     }
 
     /**
-     * Registriert den templates/-Ordner des Plugins bei Twig, damit
-     * partials/feedteasers.html.twig ueberhaupt gefunden werden kann
-     * (sowohl beim internen render() als auch bei einem manuellen
-     * {% include %} aus einem Theme-Template heraus).
+     * Registers the plugin's templates/ folder with Twig, so that
+     * partials/feedteasers.html.twig can be found at all (both for the
+     * internal render() and for a manual {% include %} from a theme
+     * template).
      */
     public function onTwigTemplatePaths(): void
     {
@@ -139,7 +140,7 @@ class FeedteasersPlugin extends Plugin
     }
 
     /**
-     * Twig-Funktion: {{ feed_teasers() }} oder {{ feed_teasers({'show_tabs': false}) }}
+     * Twig function: {{ feed_teasers() }} or {{ feed_teasers({'show_tabs': false}) }}
      */
     public function renderFeedTeasers(array $overrides = []): string
     {
@@ -178,9 +179,9 @@ class FeedteasersPlugin extends Plugin
     }
 
     /**
-     * Holt Feed-Items aus dem Cache oder laedt/parst den Feed neu.
-     * Gibt bei Fehlern ein leeres Array zurueck, damit ein einzelner
-     * kaputter Feed nicht die ganze Seite zum Absturz bringt.
+     * Gets feed items from the cache or fetches/parses the feed anew.
+     * Returns an empty array on errors, so that a single broken feed
+     * doesn't bring down the whole page.
      */
     private function getFeedItems(string $url, int $cacheTime, int $timeout, array $allowedPrivateHosts = []): array
     {
@@ -196,7 +197,7 @@ class FeedteasersPlugin extends Plugin
         try {
             $items = FeedParser::fetchAndParse($url, $timeout, $allowedPrivateHosts);
         } catch (\Throwable $e) {
-            $this->grav['log']->warning('[feedteasers] Feed konnte nicht geladen werden (' . $url . '): ' . $e->getMessage());
+            $this->grav['log']->warning('[feedteasers] Could not load feed (' . $url . '): ' . $e->getMessage());
             $items = [];
         }
 

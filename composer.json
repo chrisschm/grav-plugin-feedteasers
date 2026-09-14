@@ -1,7 +1,7 @@
 {
     "name": "chschmidt/grav-plugin-feedteasers",
     "type": "grav-plugin",
-    "description": "Zeigt Beitrags-Teaser aus externen RSS/Atom-Feeds als klickbare Kacheln an, optional mit Tab-Umschaltung zwischen mehreren Feeds.",
+    "description": "Displays post teasers from external RSS/Atom feeds as clickable tiles, optionally with tab switching between multiple feeds.",
     "keywords": ["grav", "plugin", "rss", "atom", "feed", "teaser"],
     "homepage": "https://codeberg.org/chschmidt/grav-plugin-feedteasers",
     "license": "MIT",

@@ -1,4 +1,4 @@
-name: Syntax-Checks
+name: Syntax Checks
 
 on:
   push:
@@ -8,38 +8,38 @@ on:
     branches:
       - main
       - develop
-    # Absichtlich nur main/develop gelistet: PRs mit Zielbranch "translate"
-    # (Codeberg Translate, siehe Uebersetzungs-Setup im README) loesen den
-    # Job dadurch nicht aus. Dort aendern sich ohnehin nur languages/*.yaml,
-    # nie PHP/JS/Twig - der Lint-Job wuerde dort nichts pruefen, aber
-    # unnoetig Runner-Minuten verbrauchen.
+    # Deliberately lists only main/develop: PRs targeting the "translate"
+    # branch (Codeberg Translate, see the translation setup in the README)
+    # therefore don't trigger this job. Only languages/*.yaml ever changes
+    # there, never PHP/JS/Twig - the lint job wouldn't check anything there,
+    # but would waste runner minutes.
 
 jobs:
   syntax-php-js-twig:
     if: github.server_url != 'https://github.com'
     runs-on: codeberg-small
     steps:
-      - name: Code auschecken
+      - name: Check out code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: PHP und Composer bereitstellen
-        uses: https://github.com/shivammathur/setup-php@v2 # Image explizit von Github anfordern
+      - name: Set up PHP and Composer
+        uses: https://github.com/shivammathur/setup-php@v2 # Explicitly request the image from GitHub
         with:
-          php-version: '8.3' # Gewünschte Version wählen
+          php-version: '8.3' # Choose desired version
           tools: composer:v2
-          coverage: none # Optional: Code-Coverage Treiber sparen Zeit
+          coverage: none # Optional: skip the code-coverage driver to save time
 
-      - name: PHP und Composer Version anzeigen
+      - name: Show PHP and Composer versions
         run: |
           php -v
           composer --version
 
-      - name: Abhängigkeiten installieren
+      - name: Install dependencies
         run: composer install --no-interaction --prefer-dist
 
-      - name: Geänderte Dateien ermitteln
+      - name: Determine changed files
         run: |
           BASE="${{ github.event.before }}"
           if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ]; then
@@ -48,31 +48,31 @@ jobs:
           git diff --name-only --diff-filter=d "$BASE" HEAD > changed.txt || true
           cat changed.txt
 
-      - name: PHP-Syntax prüfen
+      - name: Check PHP syntax
         run: |
-          # Prüfen, ob PHP-Dateien in der Liste sind
+          # Check whether PHP files are in the list
           PHP_FILES=$(grep -E '\.php$' changed.txt || true)
           if [ -z "$PHP_FILES" ]; then
-            echo "Keine PHP-Dateien geändert. Überspringe Syntax-Prüfung."
+            echo "No PHP files changed. Skipping syntax check."
             exit 0
           fi
           echo "$PHP_FILES" | xargs -r -n1 php -l
 
-      - name: JS-Syntax prüfen
+      - name: Check JS syntax
         run: |
-          # Prüfen, ob JS-Dateien in der Liste sind
+          # Check whether JS files are in the list
           JS_FILES=$(grep -E '\.js$' changed.txt || true)
           if [ -z "$JS_FILES" ]; then
-            echo "Keine JS-Dateien geändert. Überspringe Syntax-Prüfung."
+            echo "No JS files changed. Skipping syntax check."
             exit 0
           fi
           echo "$JS_FILES" | xargs -r -n1 node --check
 
-      - name: Twig-Syntax prüfen
+      - name: Check Twig syntax
         run: |
           TWIG_FILES=$(grep -E '\.twig$' changed.txt || true)
           if [ -z "$TWIG_FILES" ]; then
-            echo "Keine Twig-Dateien geändert."
+            echo "No Twig files changed."
             exit 0
           fi
 
@@ -87,13 +87,13 @@ jobs:
               $loader = new \Twig\Loader\ArrayLoader([]);
               $twig = new \Twig\Environment($loader);
 
-              // Grav und Plugins registrieren eigene Twig-Funktionen/-Filter
-              // (z. B. url(), nicetime(), t() ...), die in diesem isolierten
-              // Lint-Environment naturgemäß unbekannt sind. Ohne diese
-              // Fallbacks würde jede Verwendung einer solchen Funktion
-              // fälschlich als Fehler gemeldet, obwohl die Twig-Syntax
-              // korrekt ist. Die Fallbacks erlauben jeden Namen, ohne ihn
-              // auszuführen - reine Syntaxprüfung, keine echte Ausführung.
+              // Grav and plugins register their own Twig functions/filters
+              // (e.g. url(), nicetime(), t() ...), which are naturally
+              // unknown in this isolated lint environment. Without these
+              // fallbacks, any use of such a function would be wrongly
+              // reported as an error even though the Twig syntax is
+              // correct. The fallbacks accept any name without executing
+              // it - pure syntax checking, no real execution.
               $twig->registerUndefinedFunctionCallback(function ($name) {
                   return new \Twig\TwigFunction($name, function () {});
               });

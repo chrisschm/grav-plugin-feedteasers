@@ -1,44 +1,44 @@
 enabled: true
 
-# Wie lange (in Sekunden) ein abgerufener Feed zwischengespeichert wird,
-# bevor er erneut abgerufen wird.
+# How long (in seconds) a fetched feed is cached before it is fetched
+# again.
 cache_time: 1800
 
-# Maximale Anzahl an Beiträgen pro Feed.
+# Maximum number of items per feed.
 items_per_feed: 6
 
-# Länge des Textanrisses (Anzahl Zeichen) je Teaser.
+# Length of the teaser excerpt (number of characters) per teaser.
 teaser_length: 180
 
-# Mindestbreite einer einzelnen Teaser-Kachel (CSS-Wert, z.B. '260px' oder '18rem').
-# Bestimmt indirekt, wie viele Kacheln nebeneinander passen, bevor umgebrochen wird.
+# Minimum width of a single teaser card (CSS value, e.g. '260px' or '18rem').
+# Indirectly determines how many cards fit side by side before wrapping.
 card_min_width: '260px'
 
-# Reiter (Tabs) anzeigen, wenn mehr als ein Feed konfiguriert ist.
+# Show tabs when more than one feed is configured.
 show_tabs: true
 
-# Fallback-Bild, falls ein Feed-Eintrag kein Teaserbild liefert.
-# Akzeptiert einen klassischen Pfad (z.B. '/images/eigenes-bild.jpg'), eine
-# absolute URL (https://...) oder einen Grav-Stream (plugin://, theme://, user://).
-# Standardmäßig wird das mitgelieferte generische Platzhalterbild verwendet.
-# Leer lassen, um ganz auf ein Fallback-Bild zu verzichten.
+# Fallback image used when a feed item doesn't provide a teaser image.
+# Accepts a classic path (e.g. '/images/my-own-image.jpg'), an absolute
+# URL (https://...) or a Grav stream (plugin://, theme://, user://).
+# The bundled generic placeholder image is used by default.
+# Leave empty to disable the fallback image entirely.
 image_fallback: 'plugin://feedteasers/images/fallback.png'
 
-# HTTP-Timeout in Sekunden beim Abruf eines Feeds.
+# HTTP timeout in seconds when fetching a feed.
 request_timeout: 8
 
-# SSRF-Schutz: Jede tatsaechlich kontaktierte Adresse (inkl. jedes
-# HTTP-Redirect-Ziels) wird vor dem Abruf geprueft und private/lokale
-# Adressen (Loopback, RFC1918, Link-Local/Cloud-Metadaten, ...) werden
-# grundsaetzlich blockiert. Diese Liste ist nur fuer den seltenen Fall
-# gedacht, dass ein Feed absichtlich auf einer solchen Adresse liegt
-# (z.B. ein selbst gehosteter Feed im internen Netz) - Hostnamen oder
-# IP-Adressen eintragen, die trotzdem erlaubt sein sollen. Normalerweise
-# leer lassen. Kein Admin-Panel-Feld, nur ueber diese Datei konfigurierbar.
+# SSRF protection: every address actually contacted (including every
+# HTTP redirect target) is checked before the request, and private/local
+# addresses (loopback, RFC1918, link-local/cloud metadata, ...) are
+# blocked by default. This list is only meant for the rare case where a
+# feed deliberately lives at such an address (e.g. a self-hosted feed on
+# the internal network) - enter hostnames or IP addresses that should be
+# allowed anyway. Normally leave this empty. Not an admin panel field,
+# only configurable via this file.
 ssrf_allowed_hosts: []
 
-# Liste der einzubindenden Feeds. Kann im Admin-Panel bearbeitet werden.
+# List of feeds to include. Can be edited in the admin panel.
 feeds:
     -
-        name: 'Beispiel Feed'
+        name: 'Example Feed'
         url: 'https://example.com/feed.xml'

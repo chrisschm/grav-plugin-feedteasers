@@ -3,33 +3,33 @@
 namespace Grav\Plugin\FeedTeasers\Http;
 
 /**
- * Zentrale SSRF-Absicherung für den Feed-Abruf in FeedParser::httpGet().
+ * Central SSRF protection for the feed fetch in FeedParser::httpGet().
  *
- * Die Feed-URL selbst kommt zwar "nur" aus der Admin-Konfiguration (also von
- * einer grundsätzlich vertrauenswürdigen Person), das reicht als Schutz
- * trotzdem nicht aus: Ein einmal eingetragener, harmloser externer Feed kann
- * später kompromittiert werden oder per HTTP-Redirect auf eine interne
- * Adresse verweisen (Loopback, private Netze, Link-Local/Cloud-Metadaten wie
- * 169.254.169.254, ...). Ohne erneute Prüfung jedes Redirect-Ziels würde die
- * Prüfung der Erst-URL wirkungslos verpuffen.
+ * The feed URL itself comes "only" from the admin configuration (i.e. from
+ * a fundamentally trustworthy person), but that alone isn't enough
+ * protection: a harmless external feed entered once can later be
+ * compromised or use an HTTP redirect to point to an internal address
+ * (loopback, private networks, link-local/cloud metadata such as
+ * 169.254.169.254, ...). Without re-checking every redirect target, the
+ * check on the initial URL would be rendered pointless.
  *
- * Die Klasse prüft deshalb bewusst nicht nur die Ausgangs-URL, sondern muss
- * vom Aufrufer (FeedParser) für JEDEN tatsächlich kontaktierten Host erneut
- * durchlaufen werden - auch für jeden einzelnen Redirect-Hop.
+ * The class therefore deliberately checks not only the starting URL - it
+ * must be run again by the caller (FeedParser) for EVERY host actually
+ * contacted, including for each individual redirect hop.
  *
- * Analog zum gleichnamigen Modul im Social-Linking-Plugin, hier ohne
- * Abhängigkeit zu diesem.
+ * Analogous to the module of the same name in the Social Linking plugin,
+ * without a dependency on it here.
  */
 class SsrfGuard
 {
     private const ALLOWED_SCHEMES = ['http', 'https'];
 
     /**
-     * @param string[] $allowedPrivateHosts Bewusst erlaubte Hostnamen/IPs
-     *        (z. B. ein selbst gehosteter Feed im internen Netz), die trotz
-     *        privater/lokaler Adresse NICHT blockiert werden sollen.
-     *        Opt-in, leer per Default. Siehe feedteasers.yaml
-     *        (ssrf_allowed_hosts).
+     * @param string[] $allowedPrivateHosts Deliberately allowed
+     *        hostnames/IPs (e.g. a self-hosted feed on the internal
+     *        network) that should NOT be blocked despite having a
+     *        private/local address. Opt-in, empty by default. See
+     *        feedteasers.yaml (ssrf_allowed_hosts).
      */
     public function __construct(
         private array $allowedPrivateHosts = []
@@ -37,12 +37,12 @@ class SsrfGuard
     }
 
     /**
-     * Prüft eine URL vollständig (Schema + aufgelöste Ziel-IP) und liefert
-     * die validierte IP zurück, gegen die die eigentliche Verbindung
-     * aufgebaut werden sollte (siehe FeedParser::httpGet() -
-     * CURLOPT_RESOLVE-Pinning gegen DNS-Rebinding).
+     * Fully validates a URL (scheme + resolved target IP) and returns the
+     * validated IP that the actual connection should be established
+     * against (see FeedParser::httpGet() - CURLOPT_RESOLVE pinning against
+     * DNS rebinding).
      *
-     * @throws \RuntimeException wenn die URL abgelehnt wird
+     * @throws \RuntimeException if the URL is rejected
      */
     public function assertAllowedAndResolve(string $url): string
     {
@@ -58,17 +58,17 @@ class SsrfGuard
             throw new \RuntimeException('Konnte keinen Host aus der URL lesen: ' . $url);
         }
 
-        // PHP liefert IPv6-Host-Literale inkl. eckiger Klammern
-        // (z. B. "[::1]" bei "https://[::1]/..."); für Filter/Vergleiche
-        // wird die reine Adresse ohne Klammern benötigt.
+        // PHP returns IPv6 host literals including square brackets
+        // (e.g. "[::1]" for "https://[::1]/..."); filtering/comparison
+        // needs the bare address without brackets.
         if (str_starts_with($host, '[') && str_ends_with($host, ']')) {
             $host = substr($host, 1, -1);
         }
 
         if ($this->isExplicitlyAllowed($host)) {
-            // Bewusster Opt-in (z. B. interner Feed) - trotzdem muss der
-            // Host auf mindestens eine IP auflösbar sein, sonst schlägt der
-            // eigentliche Request ohnehin fehl.
+            // Deliberate opt-in (e.g. internal feed) - the host still has
+            // to resolve to at least one IP, otherwise the actual request
+            // would fail anyway.
             $ip = $this->resolveFirstIp($host);
             if ($ip === null) {
                 throw new \RuntimeException('Host "' . $host . '" konnte nicht aufgelöst werden.');
@@ -76,7 +76,7 @@ class SsrfGuard
             return $ip;
         }
 
-        // Host selbst schon eine IP-Adresse (Literal)?
+        // Is the host itself already an IP address (literal)?
         if (filter_var($host, FILTER_VALIDATE_IP)) {
             if ($this->isDisallowedIp($host)) {
                 throw new \RuntimeException(
@@ -90,9 +90,9 @@ class SsrfGuard
             throw new \RuntimeException('Zugriff auf "' . $host . '" ist nicht erlaubt (SSRF-Schutz).');
         }
 
-        // Hostname: ALLE aufgelösten Adressen (A + AAAA) prüfen, nicht nur
-        // die erste - ein Hostname kann auf mehrere IPs zeigen, und DNS
-        // liefert nicht garantiert eine stabile Reihenfolge.
+        // Hostname: check ALL resolved addresses (A + AAAA), not just the
+        // first - a hostname can point to multiple IPs, and DNS is not
+        // guaranteed to return a stable order.
         $ips = $this->resolveAllIps($host);
         if (empty($ips)) {
             throw new \RuntimeException('Host "' . $host . '" konnte nicht aufgelöst werden.');
@@ -107,11 +107,11 @@ class SsrfGuard
             }
         }
 
-        // Für das spätere IP-Pinning (CURLOPT_RESOLVE) wird eine konkrete,
-        // bereits geprüfte Adresse zurückgegeben. Dadurch verbindet sich
-        // curl garantiert zu genau der IP, die hier geprüft wurde, statt
-        // den Hostnamen zum Verbindungszeitpunkt erneut (und ggf. anders,
-        // Stichwort DNS-Rebinding) aufzulösen.
+        // For the later IP pinning (CURLOPT_RESOLVE), a concrete,
+        // already-checked address is returned. This guarantees that curl
+        // connects to exactly the IP that was checked here, instead of
+        // resolving the hostname again at connection time (and possibly
+        // getting a different result - keyword DNS rebinding).
         return $ips[0];
     }
 
@@ -156,14 +156,14 @@ class SsrfGuard
     }
 
     /**
-     * Prüft eine einzelne IP-Adresse (v4 oder v6) gegen bekannte
-     * private/reservierte/lokale Bereiche, die für serverseitige Requests
-     * an fremde, öffentliche Feeds niemals ein legitimes Ziel sind.
+     * Checks a single IP address (v4 or v6) against known
+     * private/reserved/local ranges that can never be a legitimate target
+     * for server-side requests to foreign, public feeds.
      */
     private function isDisallowedIp(string $ip): bool
     {
-        // FILTER_FLAG_NO_PRIV_RANGE + FILTER_FLAG_NO_RES_RANGE decken die
-        // gängigen privaten/reservierten Bereiche für v4 UND v6 ab
+        // FILTER_FLAG_NO_PRIV_RANGE + FILTER_FLAG_NO_RES_RANGE cover the
+        // common private/reserved ranges for v4 AND v6
         // (10/8, 172.16/12, 192.168/16, 127/8, 169.254/16, fc00::/7,
         // fe80::/10, ::1, 0.0.0.0/8, etc.).
         $publicRangeCheck = filter_var(
@@ -176,9 +176,9 @@ class SsrfGuard
             return true;
         }
 
-        // Zusätzliche, von den obigen Flags nicht immer abgedeckte
-        // Sonderbereiche (Carrier-Grade-NAT, Benchmarking, IPv4-mapped
-        // IPv6, Multicast).
+        // Additional special ranges not always covered by the flags
+        // above (carrier-grade NAT, benchmarking, IPv4-mapped IPv6,
+        // multicast).
         $extraDenylist = [
             '100.64.0.0/10',   // Carrier-Grade NAT (RFC 6598)
             '192.0.0.0/24',    // IETF Protocol Assignments

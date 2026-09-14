@@ -4,28 +4,28 @@ namespace Grav\Plugin\FeedTeasers;
 
 use Grav\Plugin\FeedTeasers\Http\SsrfGuard;
 
-// Manuelles require statt Composer-Autoload: composer.json des Plugins
-// enthaelt bewusst keine "require"-Fremdpakete und dient nur als Metadaten
-// (siehe docs/ARCHITECTURE.md) - ein vendor/autoload.php ist bei einer
-// GPM-Installation nicht garantiert vorhanden.
+// Manual require instead of Composer autoload: the plugin's composer.json
+// deliberately has no "require" third-party packages and only serves as
+// metadata (see docs/ARCHITECTURE.md) - a vendor/autoload.php is not
+// guaranteed to exist with a GPM installation.
 require_once __DIR__ . '/Http/SsrfGuard.php';
 
 /**
- * Minimaler, abhaengigkeitsfreier RSS 2.0 / Atom 1.0 Parser.
- * Nutzt ausschliesslich in PHP eingebaute Erweiterungen (SimpleXML, libxml).
+ * Minimal, dependency-free RSS 2.0 / Atom 1.0 parser.
+ * Uses only PHP's built-in extensions (SimpleXML, libxml).
  */
 class FeedParser
 {
     private const MAX_REDIRECTS = 5;
 
     /**
-     * Laedt einen Feed per HTTP und gibt ein normalisiertes Array von Items zurueck.
+     * Fetches a feed over HTTP and returns a normalized array of items.
      *
      * @param string   $url
      * @param int      $timeout
-     * @param string[] $allowedPrivateHosts Opt-in-Liste bewusst erlaubter
-     *        privater/lokaler Hosts (siehe SsrfGuard), normalerweise leer.
-     * @throws \RuntimeException wenn der Feed nicht geladen oder geparst werden kann
+     * @param string[] $allowedPrivateHosts Opt-in list of deliberately
+     *        allowed private/local hosts (see SsrfGuard), normally empty.
+     * @throws \RuntimeException if the feed cannot be fetched or parsed
      * @return array
      */
     public static function fetchAndParse(string $url, int $timeout = 8, array $allowedPrivateHosts = []): array
@@ -40,18 +40,18 @@ class FeedParser
     }
 
     /**
-     * Fuehrt den eigentlichen HTTP-Abruf durch (cURL, falls verfuegbar, sonst
-     * stream-basiertes file_get_contents als Fallback).
+     * Performs the actual HTTP fetch (cURL if available, otherwise a
+     * stream-based file_get_contents as fallback).
      *
-     * SSRF-Schutz: Jede tatsaechlich kontaktierte URL - inklusive jedes
-     * einzelnen Redirect-Ziels - wird ueber SsrfGuard geprueft (Schema,
-     * aufgeloeste IP gegen private/reservierte Bereiche). Redirects werden
-     * deshalb bewusst NICHT automatisch von cURL verfolgt
-     * (CURLOPT_FOLLOWLOCATION => false), sondern manuell Schritt fuer
-     * Schritt, jeweils mit erneuter Pruefung des naechsten Ziels. Beim
-     * cURL-Pfad wird zusaetzlich die geprüfte IP per CURLOPT_RESOLVE
-     * gepinnt, damit tatsaechlich die geprüfte Adresse kontaktiert wird
-     * (Schutz gegen DNS-Rebinding zwischen Pruefung und Verbindungsaufbau).
+     * SSRF protection: every URL actually contacted - including each
+     * individual redirect target - is checked via SsrfGuard (scheme,
+     * resolved IP against private/reserved ranges). Redirects are
+     * therefore deliberately NOT followed automatically by cURL
+     * (CURLOPT_FOLLOWLOCATION => false), but manually step by step,
+     * re-checking the next target each time. On the cURL path, the
+     * already-checked IP is additionally pinned via CURLOPT_RESOLVE so
+     * that the checked address is actually the one contacted (protection
+     * against DNS rebinding between the check and the connection).
      */
     private static function httpGet(string $url, int $timeout, array $allowedPrivateHosts = []): ?string
     {
@@ -67,8 +67,8 @@ class FeedParser
             }
             $visited[$currentUrl] = true;
 
-            // Wirft RuntimeException, wenn Schema/Host/aufgeloeste IP nicht
-            // erlaubt sind - wird vom Aufrufer (getFeedItems()) abgefangen.
+            // Throws a RuntimeException if scheme/host/resolved IP are not
+            // allowed - caught by the caller (getFeedItems()).
             $ip = $guard->assertAllowedAndResolve($currentUrl);
 
             if (function_exists('curl_init')) {
@@ -91,10 +91,10 @@ class FeedParser
     }
 
     /**
-     * Fuehrt genau einen HTTP-Request per cURL aus, ohne automatischer
-     * Redirect-Verfolgung, gepinnt auf die vorab gepruefte IP.
+     * Performs exactly one HTTP request via cURL, without automatic
+     * redirect following, pinned to the pre-checked IP.
      *
-     * @return array{0:int,1:?string,2:string} [http_status, location_header_oder_null, body]
+     * @return array{0:int,1:?string,2:string} [http_status, location_header_or_null, body]
      */
     private static function curlRequestOnce(string $url, string $ip, int $timeout, string $userAgent): array
     {
@@ -105,7 +105,7 @@ class FeedParser
             $port = $scheme === 'https' ? 443 : 80;
         }
 
-        // IPv6-Literale brauchen bei --resolve/CURLOPT_RESOLVE eckige Klammern.
+        // IPv6 literals need square brackets for --resolve/CURLOPT_RESOLVE.
         $resolveIp = (strpos($ip, ':') !== false) ? '[' . $ip . ']' : $ip;
 
         $ch = curl_init($url);
@@ -138,11 +138,11 @@ class FeedParser
         $body = substr($raw, $headerSize);
 
         $location = null;
-        // Bei mehreren Redirect-Antworten in $headerStr (kommt bei manuellem
-        // Aufruf hier nicht vor, da FOLLOWLOCATION aus ist) zaehlt ohnehin
-        // nur der letzte Header-Block - preg_match liefert das letzte
-        // Vorkommen durch das 'm'-Flag ueber alle Zeilen ausreichend sicher,
-        // da pro Aufruf nur ein Response-Header-Block vorliegt.
+        // With multiple redirect responses in $headerStr (doesn't happen
+        // with the manual call here, since FOLLOWLOCATION is off) only the
+        // last header block matters anyway - preg_match reliably returns
+        // the last occurrence via the 'm' flag across all lines, since
+        // each call only ever produces one response header block.
         if (preg_match('/^Location:\s*(.+)$/mi', $headerStr, $m)) {
             $location = trim($m[1]);
         }
@@ -151,15 +151,14 @@ class FeedParser
     }
 
     /**
-     * Fallback ohne cURL. Kann die Ziel-IP mangels einfacher
-     * Stream-Context-Option NICHT pinnen (kein Aequivalent zu
-     * CURLOPT_RESOLVE) - die vorab per SsrfGuard geprueften Bereiche
-     * werden dadurch weiterhin durchgesetzt, ein sehr eng getaktetes
-     * DNS-Rebinding zwischen Pruefung und Verbindungsaufbau ist auf diesem
-     * Pfad aber theoretisch nicht ausgeschlossen. In der Praxis nur
-     * relevant, wenn cURL auf dem Server tatsaechlich fehlt.
+     * Fallback without cURL. Cannot pin the target IP for lack of a
+     * simple stream context option (no equivalent to CURLOPT_RESOLVE) -
+     * the ranges pre-checked via SsrfGuard are still enforced, but a
+     * very tightly timed DNS rebinding between the check and the
+     * connection is theoretically not ruled out on this path. In
+     * practice only relevant if cURL is actually missing on the server.
      *
-     * @return array{0:int,1:?string,2:string} [http_status, location_header_oder_null, body]
+     * @return array{0:int,1:?string,2:string} [http_status, location_header_or_null, body]
      */
     private static function streamRequestOnce(string $url, int $timeout, string $userAgent): array
     {
@@ -186,8 +185,8 @@ class FeedParser
         $status = 0;
         $location = null;
 
-        // $http_response_header wird von file_get_contents() bei Nutzung
-        // des http(s)-Wrappers automatisch im lokalen Scope bereitgestellt.
+        // $http_response_header is automatically provided in the local
+        // scope by file_get_contents() when using the http(s) wrapper.
         if (isset($http_response_header) && is_array($http_response_header)) {
             foreach ($http_response_header as $headerLine) {
                 if (preg_match('#^HTTP/\S+\s+(\d{3})#', $headerLine, $m)) {
@@ -203,8 +202,8 @@ class FeedParser
     }
 
     /**
-     * Loest ein Location-Header-Ziel (absolut oder relativ) gegen die
-     * Basis-URL des vorherigen Hops auf.
+     * Resolves a Location header target (absolute or relative) against
+     * the base URL of the previous hop.
      */
     private static function resolveRedirectUrl(string $baseUrl, string $location): string
     {
@@ -233,7 +232,7 @@ class FeedParser
     }
 
     /**
-     * Parst RSS 2.0 oder Atom 1.0 XML in ein einheitliches Array-Format:
+     * Parses RSS 2.0 or Atom 1.0 XML into a uniform array format:
      * [ ['title' => ..., 'link' => ..., 'date' => int|null, 'summary' => ..., 'image' => string|null], ... ]
      */
     public static function parse(string $xmlString): array
@@ -362,7 +361,7 @@ class FeedParser
             }
         }
 
-        // 3) Erstes <img> aus dem HTML-Inhalt extrahieren
+        // 3) Extract the first <img> from the HTML content
         return self::extractFirstImageFromHtml($htmlContent);
     }
 
